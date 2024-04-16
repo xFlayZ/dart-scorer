@@ -41,12 +41,12 @@ export class ChooseSongModalComponent {
     { name: 'Dreamers', value: 'dreamers' },
     { name: 'Ein Hoch auf uns', value: 'ein-hoch-auf-uns' },
     { name: 'Eye of the Tiger (Intro)', value: 'eye-of-the-tiger-intro' },
-    { name: 'Eye of the Tiger 2', value: 'eye-of-the-tiger-second' },
+    { name: 'Eye of the Tiger (Refr.)', value: 'eye-of-the-tiger-second' },
     { name: 'Final Fantasy Victory', value: 'final-fantasy' },
     { name: 'Papaoutai', value: 'papaute' },
     { name: 'Pokemon', value: 'pokemon' },
     { name: 'Wavin Flag', value: 'wavin-flag' },
-    { name: 'Whenever, Whereever', value: 'whenever-whereever' },
+    { name: 'Whenever, Wherever', value: 'whenever-whereever' },
   ];
 
   constructor(private soundService: SoundService) { }
