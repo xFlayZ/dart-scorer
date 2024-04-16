@@ -2,6 +2,7 @@
 
 ## [1.5.1] - 2024-04-14
 - Hinzugefügt: Erste kleine Variante für "Hide" hinzugefügt.
+- Änderung: Alle Sieger Songs wurden auf eine länge von 15 Sekunden geändert.
 - Fix: Kleine Fehler wurden behoben.
 
 ## [1.5.0] - 2024-04-14
