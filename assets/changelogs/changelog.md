@@ -1,8 +1,12 @@
 # Changelog
 
+## [1.5.2] - 2024-04-15
+- Änderung: An einigen Stellen wurden ICONs innerhalb der Buttons hinzugefügt.
+- Änderung: Der Reset Button befindet sich nun rechts oberhalb der Voreinstellungen und hat ein neues Design.
+- Änderung: Der erste Buchstabe des Input-Fields wird nun automatisch groß geschrieben.
+
 ## [1.5.1] - 2024-04-14
 - Hinzugefügt: Erste kleine Variante für "Hide" hinzugefügt.
-- Änderung: Alle Sieger Songs wurden auf eine länge von 15 Sekunden geändert.
 - Fix: Kleine Fehler wurden behoben.
 
 ## [1.5.0] - 2024-04-14
