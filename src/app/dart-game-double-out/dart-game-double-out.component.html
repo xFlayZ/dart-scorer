@@ -90,7 +90,7 @@
           }"
           [disabled]="inRound"
         >
-          Nächster Spieler
+          <i class="fa-solid fa-user mr-2"></i>Nächster Spieler
         </button>
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -101,7 +101,7 @@
           }"
           [disabled]="gameData[currentPlayerCount].firstDart === '-'"
         >
-          Letzten Dart löschen
+          <i class="fa-solid fa-rotate-left mr-2"></i>Letzten Dart löschen
         </button>
       </div>
       <div *ngIf="legEnd" class="buttons-after-round text-center">
@@ -113,7 +113,7 @@
           }"
           [disabled]="!isOneActivePlayer"
         >
-          Neue Runde
+          <i class="fa-solid fa-play mr-2"></i>Neue Runde
         </button>
         <div *ngIf="!isOneActivePlayer" class="text-red-800 mt-2">
           <strong>Mindestens eine Spieler muss aktiv sein!</strong>

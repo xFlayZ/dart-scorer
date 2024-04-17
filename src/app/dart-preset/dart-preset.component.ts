@@ -111,4 +111,8 @@ export class DartPresetComponent implements OnInit {
       this.songModal.openModal(index);
     }
   }
+
+  capitalizeFirstLetter() {
+    this.newPlayerName = this.newPlayerName.charAt(0).toUpperCase() + this.newPlayerName.slice(1);
+  }
 }
