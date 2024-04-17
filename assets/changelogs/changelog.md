@@ -4,6 +4,7 @@
 - Änderung: An einigen Stellen wurden ICONs innerhalb der Buttons hinzugefügt.
 - Änderung: Der Reset Button befindet sich nun rechts oberhalb der Voreinstellungen und hat ein neues Design.
 - Änderung: Der erste Buchstabe des Input-Fields wird nun automatisch groß geschrieben.
+- Fix: Kleiner Fehler mit den Songs behoben (Länge ca. 15 Sekunden)
 
 ## [1.5.1] - 2024-04-14
 - Hinzugefügt: Erste kleine Variante für "Hide" hinzugefügt.
