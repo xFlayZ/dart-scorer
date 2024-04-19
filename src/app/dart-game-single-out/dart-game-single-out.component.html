@@ -158,12 +158,12 @@
               <i
                 *ngIf="player.isActive"
                 class="fa-solid fa-check text-green-500 cursor-pointer"
-                (click)="player.isActive = false"
+                (click)="togglePlayerStatuss(player)"
               ></i>
               <i
                 *ngIf="!player.isActive"
                 class="fa-solid fa-ban text-red-500 cursor-pointer"
-                (click)="player.isActive = true"
+                (click)="togglePlayerStatuss(player)"
               ></i>
             </div>
           </td>
