@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChooseSongModalComponent } from '../choose-song-modal/choose-song-modal.component';
+import { ChooseSongModalComponent } from '../shared/modals/choose-song-modal/choose-song-modal.component';
 
 interface Player {
   name: string;

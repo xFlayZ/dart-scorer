@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SoundService } from '../services/sound.service';
+import { SoundService } from '../../../services/sound.service';
 
 interface Player {
   name: string;
