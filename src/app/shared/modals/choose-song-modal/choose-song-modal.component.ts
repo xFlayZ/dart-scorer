@@ -31,6 +31,7 @@ export class ChooseSongModalComponent {
     { name: 'Shakira - Waka Waka', value: 'waka-waka' },
     { name: 'FC Bayern Torhymne', value: 'fc-bayern' },
     { name: 'SV Werder Bremen Toryhymne', value: '500-miles' },
+    { name: 'Eintracht Braunschweig Torhymne', value: 'btsv'},
     { name: 'Around The World', value: 'around-the-world' },
     { name: 'Major Tom', value: 'major-tom' },
     { name: 'Never Gonna Give You Up', value: 'never-gonna-give-you-up' },
@@ -47,6 +48,7 @@ export class ChooseSongModalComponent {
     { name: 'Pokemon', value: 'pokemon' },
     { name: 'Wavin Flag', value: 'wavin-flag' },
     { name: 'Whenever, Whereever', value: 'whenever-whereever' },
+    { name: 'I Will Survive (Lalala)', value: 'freiburg'},
   ];
 
   constructor(private soundService: SoundService) { }

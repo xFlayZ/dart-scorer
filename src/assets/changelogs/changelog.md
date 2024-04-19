@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.5.4] - 2024-04-19
+- Hinzugefügt: Alle Neuerungen aus SingleOut sind nun auch im DoubleOut Verfügbar!
+- Änderung: Spieler Status wurde angepasst, wenn kein Spieler aktiv ist, endet die Runde ohne Wertung.
+
+## [1.5.3] - 2024-04-18
+- Hinzugefügt: Eine Runde kann nun über die Einstellungen zurückgesetzt werden und wird nicht gewertet. (Single Out)
+- Änderung: Das Designs der "Toggle"-Button innerhalb der Einstellungen wurde in einem einheitlichen Design überarbeitet. (Single Out)
+- Änderung: Der Spieler Status wurde nun durch ICONs ausgetauscht und kann innerhalb des Spieles verändert werden. (Single Out)
+- Änderung: "Nächster Spieler"-Button kann nun jederzeit gedrückt werden. Nicht ausgewählte Würfe werden als "0" gewertet.
+
+## [1.5.2] - 2024-04-17
+- Änderung: An einigen Stellen wurden ICONs innerhalb der Buttons hinzugefügt.
+- Änderung: Der Reset Button befindet sich nun rechts oberhalb der Voreinstellungen und hat ein neues Design.
+- Änderung: Der erste Buchstabe des Input-Fields wird nun automatisch groß geschrieben.
+- Fix: Kleiner Fehler mit den Songs behoben (Länge ca. 15 Sekunden)
+
 ## [1.5.1] - 2024-04-14
 - Hinzugefügt: Erste kleine Variante für "Hide" hinzugefügt.
 - Fix: Kleine Fehler wurden behoben.

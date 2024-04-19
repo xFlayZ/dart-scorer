@@ -1,6 +1,16 @@
 <form class="mt-3">
   <div class="bg-white shadow-md rounded-md p-4">
-    <h3 class="text-lg font-semibold">Voreinstellungen</h3>
+    <div class="flex justify-between items-center">
+      <h3 class="text-lg font-semibold">Voreinstellungen</h3>
+      <button
+        *ngIf="resetButton"
+        type="button"
+        class="text-red-500 rounded"
+        (click)="resetData()"
+      >
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </div>
 
     <app-error-message
       *ngIf="errorMessage"
@@ -13,28 +23,22 @@
       placeholder="Spieler 1"
       [(ngModel)]="newPlayerName"
       [ngModelOptions]="{ standalone: true }"
+      (input)="capitalizeFirstLetter()"
     />
+
     <button
-      type="button"
+      type="submit"
       class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 mr-2"
       (click)="addPlayer()"
     >
-      Spieler Hinzufügen
+      <i class="fa-solid fa-plus mr-2"></i>Spieler Hinzufügen
     </button>
     <button
-      type="submit"
+      type="button"
       class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-4"
       (click)="startGame()"
     >
-      Spiel Starten
-    </button>
-    <button
-      *ngIf="resetButton"
-      type="submit"
-      class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded mt-4 float-right"
-      (click)="resetData()"
-    >
-      Reset
+      <i class="fa-solid fa-circle-play mr-2"></i>Spiel Starten
     </button>
 
     <p class="text-lg font-semibold underline mt-4">Teilnehmer:</p>

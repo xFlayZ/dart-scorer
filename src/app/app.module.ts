@@ -17,6 +17,7 @@ import { TextToSpeechService } from './services/text-to-speech.service';
 import { SoundService } from './services/sound.service';
 import { ChooseSongModalComponent } from './shared/modals/choose-song-modal/choose-song-modal.component';
 import { VoiceToTextService } from './services/voice-to-text.service';
+import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal-confirm-action.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { VoiceToTextService } from './services/voice-to-text.service';
     FooterComponent,
     DartGameAroundTheClockComponent,
     DartGameDoubleOutComponent,
-    ChooseSongModalComponent
+    ChooseSongModalComponent,
+    ModalConfirmActionComponent
   ],
   imports: [
     BrowserModule,

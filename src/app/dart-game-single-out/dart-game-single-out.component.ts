@@ -320,10 +320,6 @@ export class DartGameSingleOutComponent implements OnInit {
     }
   }
 
-  checkIfOneActivePlayer() {
-    this.isOneActivePlayer = this.gameData.some(player => player.isActive);
-  }
-
   speakText(): void {
     const currentPlayer = this.gameData[this.currentPlayerCount];
 
@@ -351,6 +347,7 @@ export class DartGameSingleOutComponent implements OnInit {
     this.playSoundEnabled = !this.playSoundEnabled;
     localStorage.setItem('playSoundEnabled', String(this.playSoundEnabled));
   }
+  
 
   toggleAnimationEnabled(): void {
     this.animationEnabled = !this.animationEnabled;
@@ -359,7 +356,6 @@ export class DartGameSingleOutComponent implements OnInit {
 
   toggleVoiceToTextEnabled(): void {
     this.voiceToTextEnabled = !this.voiceToTextEnabled;
-
     if (this.voiceToTextEnabled) {
       this.voiceToScore();
     } else {
@@ -498,5 +494,33 @@ export class DartGameSingleOutComponent implements OnInit {
     if (voiceToTextEnabled !== null) {
       this.voiceToTextEnabled = voiceToTextEnabled === 'true';
     }
+  }
+
+  resetRound(): void {
+    this.legEnd = true;
+  }
+
+  resetGame(): void {
+    this.setupGame();
+  }
+
+  togglePlayerStatuss(player: any): void {
+    const currentPlayer = this.gameData[this.currentPlayerCount];
+    this.checkIfOneActivePlayer(player)
+    
+    if (!this.isOneActivePlayer && !this.legEnd) {
+      // add confirm modal
+      this.legEnd = true;
+    } else if (currentPlayer.player == player.player) {
+      // add confirm modal
+      if (!this.legEnd) {
+        this.nextPlayer();
+      }
+    }
+  }
+
+  checkIfOneActivePlayer(player: any) {
+    player.isActive = !player.isActive;
+    this.isOneActivePlayer = this.gameData.some(player => player.isActive);
   }
 }
