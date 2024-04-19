@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.5.4] - 2024-04-19
+- Hinzugefügt: Alle Neuerungen aus SingleOut sind nun auch im DoubleOut Verfügbar!
+- Änderung: Spieler Status wurde angepasst, wenn kein Spieler aktiv ist, endet die Runde ohne Wertung.
+
 ## [1.5.3] - 2024-04-18
 - Hinzugefügt: Eine Runde kann nun über die Einstellungen zurückgesetzt werden und wird nicht gewertet. (Single Out)
 - Änderung: Das Designs der "Toggle"-Button innerhalb der Einstellungen wurde in einem einheitlichen Design überarbeitet. (Single Out)
