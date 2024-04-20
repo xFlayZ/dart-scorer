@@ -10,7 +10,7 @@ import { ModalService } from '../../../services/modal-service/modal.service';
   templateUrl: './game-settings-modal.component.html',
   styleUrl: './game-settings-modal.component.scss',
 })
-export class GameSettingsModalComponent {
+export class GameSettingsModalComponent implements OnInit {
   public modalName: string = 'gameSettingsModal';
   public gameSettings: GameSettings;
   public isSettingsModalOpen = false;
@@ -31,11 +31,19 @@ export class GameSettingsModalComponent {
     this.gameSettings = this.gameSettingsService.gameSettings;
   }
 
+  ngOnInit(): void {
+    this.gameSettings = this.gameSettingsService.gameSettings;
+  }
+
   ngOnDestroy() {
     this.modalSubscription.unsubscribe();
   }
 
   closeSettingsModal() {
+    if (!this.gameSettings.voiceToTextEnabled) {
+      this.stopScoreToVoice();
+    }
+
     this.modalService.closeModal(this.modalName);
   }
 
@@ -58,9 +66,6 @@ export class GameSettingsModalComponent {
   toggleVoiceToTextEnabled(): void {
     this.gameSettings.voiceToTextEnabled =
       !this.gameSettings.voiceToTextEnabled;
-    if (!this.gameSettings.voiceToTextEnabled) {
-      this.stopScoreToVoice();
-    }
     this.gameSettingsService.saveSettings();
   }
 

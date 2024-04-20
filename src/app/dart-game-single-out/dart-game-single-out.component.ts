@@ -213,25 +213,6 @@ export class DartGameSingleOutComponent implements OnInit {
     });
   }
 
-  backToLastPlayer() {
-    // delete last darts currentPlayer
-    this.deleteLastDart();
-    this.deleteLastDart();
-    this.deleteLastDart();
-
-    // go back to last player
-    this.currentPlayerCount = this.previousPlayerCount;
-
-    // get currentPlayer
-    const currentPlayer = this.gameData[this.currentPlayerCount];
-
-    // remove round
-    currentPlayer.round -= 1;
-
-    // set inRound false
-    this.inRound = false;
-  }
-
   calcScore(thrownNumber: string) {
     const multiplier = thrownNumber.charAt(0);
     const number =
@@ -303,47 +284,6 @@ export class DartGameSingleOutComponent implements OnInit {
 
   get sortedGameData() {
     return this.gameData.slice().sort((a, b) => b.wins - a.wins);
-  }
-
-  updateDartValue(dartType: string) {
-    const currentPlayer = this.gameData[this.currentPlayerCount];
-    if (currentPlayer[dartType] != '-') {
-      let updateDartValue = '-';
-
-      if (dartType == 'firstDart') {
-        updateDartValue = currentPlayer.firstDart;
-      } else if (dartType == 'secondDart') {
-        updateDartValue = currentPlayer.secondDart;
-      } else if (dartType == 'thirdDart') {
-        updateDartValue = currentPlayer.thirdDart;
-      }
-
-      let multiplier = updateDartValue.charAt(0);
-      let number =
-        multiplier === 'T' || multiplier === 'D'
-          ? updateDartValue.slice(1)
-          : updateDartValue;
-      let multiplierFactor =
-        multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
-      let score = parseInt(number) * multiplierFactor;
-
-      currentPlayer.roundTotal -= score;
-      currentPlayer.score += score;
-
-      multiplier = this.lastThrownNumber.charAt(0);
-      number =
-        multiplier === 'T' || multiplier === 'D'
-          ? this.lastThrownNumber.slice(1)
-          : this.lastThrownNumber;
-      multiplierFactor = multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
-      score = parseInt(number) * multiplierFactor;
-
-      currentPlayer.roundTotal += score;
-      currentPlayer.score -= score;
-
-      currentPlayer[dartType] = this.lastThrownNumber;
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
-    }
   }
 
   speakText(): void {

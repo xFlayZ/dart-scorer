@@ -22,6 +22,7 @@ import { TopBarControlsComponent } from './shared/top-bar-controls/top-bar-contr
 import { GameSettingsModalComponent } from './shared/modals/game-settings-modal/game-settings-modal.component';
 import { GameSettingsButtonComponent } from './shared/buttons/game-settings-button/game-settings-button.component';
 import { GameBackButtonComponent } from './shared/buttons/game-back-button/game-back-button.component';
+import { GamePlayerCardComponent } from './shared/game-player-card/game-player-card.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { GameBackButtonComponent } from './shared/buttons/game-back-button/game-
     GameSettingsModalComponent,
     GameSettingsButtonComponent,
     GameBackButtonComponent,
+    GamePlayerCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TextToSpeechService, VoiceToTextService, SoundService],
