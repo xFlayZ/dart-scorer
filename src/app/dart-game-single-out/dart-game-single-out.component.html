@@ -5,47 +5,10 @@
       [gameData]="gameData"
       [legEnd]="legEnd"
     ></app-game-player-card>
-    <!-- game control buttons -->
-    <div
-      class="bg-gray-800 text-white rounded-lg shadow-lg p-6 flex justify-center mt-2"
-    >
-      <div *ngIf="!legEnd" class="buttons-in-round">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-          (click)="nextPlayer()"
-        >
-          <i class="fa-solid fa-user mr-2"></i>Nächster Spieler
-        </button>
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          (click)="deleteLastDart()"
-          [ngClass]="{
-            'opacity-50 cursor-not-allowed':
-              gameData[currentPlayerCount].firstDart === '-'
-          }"
-          [disabled]="gameData[currentPlayerCount].firstDart === '-'"
-        >
-          <i class="fa-solid fa-rotate-left mr-2"></i>Letzten Dart löschen
-        </button>
-      </div>
-      <div *ngIf="legEnd" class="buttons-after-round text-center">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          (click)="nextRound()"
-          [ngClass]="{
-            'opacity-50 cursor-not-allowed': !isOneActivePlayer
-          }"
-          [disabled]="!isOneActivePlayer"
-        >
-          <i class="fa-solid fa-play mr-2"></i>Neue Runde
-        </button>
-        <div *ngIf="!isOneActivePlayer" class="text-red-800 mt-2">
-          <strong>Mindestens eine Spieler muss aktiv sein!</strong>
-        </div>
-      </div>
-    </div>
-
-    <!-- game control buttons end -->
+    <app-game-controls
+      [gameData]="gameData"
+      [scoreValue]="scoreValue"
+    ></app-game-controls>
   </div>
   <div>
     <app-dart-board
@@ -53,54 +16,4 @@
     ></app-dart-board>
   </div>
 </div>
-
-<!-- gameData Table -->
-<div class="mt-8">
-  <div class="overflow-x-auto mt-4">
-    <table class="table-auto min-w-full bg-white shadow-md overflow-hidden">
-      <thead class="bg-gray-800 text-white">
-        <tr>
-          <th class="px-4 py-2 text-left">Spieler</th>
-          <th class="px-4 py-2 text-left">Gewonnene Legs</th>
-          <th class="px-4 py-2 text-left">Rest Score</th>
-          <th class="px-4 py-2 text-left">Runde</th>
-          <th class="px-4 py-2 text-left">Runden Durchschnitt</th>
-          <th class="px-4 py-2 text-left">Höchster Wurf</th>
-          <th class="px-4 py-2 text-left">Aktiv?</th>
-        </tr>
-      </thead>
-      <tbody class="text-gray-700">
-        <!-- Sortiere Spieler nach gewonnenen Runden -->
-        <tr *ngFor="let player of sortedGameData" class="border-b">
-          <td class="px-4 py-2 text-left">{{ player.playerName }}</td>
-          <td class="px-4 py-2 text-left">{{ player.wins }}</td>
-          <td class="px-4 py-2 text-left">{{ player.score }}</td>
-          <td class="px-4 py-2 text-left">{{ player.round }}</td>
-          <td class="px-4 py-2 text-left">{{ player.roundAverage }}</td>
-          <td class="px-4 py-2 text-left">{{ player.highestRound }}</td>
-          <td class="px-4 py-2 text-left">
-            <div class="player-status">
-              <i
-                *ngIf="player.isActive"
-                class="fa-solid fa-check text-green-500 cursor-pointer"
-                (click)="togglePlayerStatuss(player)"
-              ></i>
-              <i
-                *ngIf="!player.isActive"
-                class="fa-solid fa-ban text-red-500 cursor-pointer"
-                (click)="togglePlayerStatuss(player)"
-              ></i>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- modal area -->
-<app-dart-winner-modal
-  [isOpen]="winnerModalOpen"
-  [winner]="gameData[currentPlayerCount].playerName"
-  (closeModalEvent)="closeWinnerModal()"
-></app-dart-winner-modal>
+<app-game-data-table [gameData]="gameData"></app-game-data-table>

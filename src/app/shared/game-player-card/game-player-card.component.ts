@@ -1,29 +1,48 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { GameData } from '../../interfaces/game-data.interface';
-import { GameSettingsService } from '../../services/game-settings/game-settings.service';
+import { GameService } from '../../services/game-service/game.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game-player-card',
   templateUrl: './game-player-card.component.html',
   styleUrl: './game-player-card.component.scss',
 })
-export class GamePlayerCardComponent implements OnInit {
+export class GamePlayerCardComponent implements OnInit, OnDestroy {
   public currentPlayerCount = 0;
   public previousPlayerCount = 0;
+
+  currentPlayerCountSubscription!: Subscription;
+  previousPlayerCountSubscription!: Subscription;
+
   public possibleCheckout = '-';
+  public lastThrownNumber = '-';
 
   @Input() public gameData: GameData[] = [];
   @Input() public legEnd: boolean = false;
 
-  constructor() {}
+  constructor(public gameService: GameService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentPlayerCountSubscription =
+      this.gameService.currentPlayerCount$.subscribe((count) => {
+        this.currentPlayerCount = count;
+      });
+
+    this.previousPlayerCountSubscription =
+      this.gameService.previousPlayerCount$.subscribe((count) => {
+        this.previousPlayerCount = count;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.currentPlayerCountSubscription) {
+      this.currentPlayerCountSubscription.unsubscribe();
+    }
+  }
 
   updateDartValue(dartType: string) {
-    console.log('updateDartValue', dartType);
-
-    /*
-    const currentPlayer = this.gameData[this.currentPlayerCount];
+    const currentPlayer = this.gameData[this.gameService.playerCount];
     if (currentPlayer[dartType] != '-') {
       let updateDartValue = '-';
 
@@ -61,17 +80,13 @@ export class GamePlayerCardComponent implements OnInit {
       currentPlayer[dartType] = this.lastThrownNumber;
       localStorage.setItem('gameData', JSON.stringify(this.gameData));
     }
-    */
   }
 
   backToLastPlayer() {
-    console.log('backToLastPlayer');
-
-    /*
     // delete last darts currentPlayer
-    this.deleteLastDart();
-    this.deleteLastDart();
-    this.deleteLastDart();
+    this.gameService.deleteLastDart();
+    this.gameService.deleteLastDart();
+    this.gameService.deleteLastDart();
 
     // go back to last player
     this.currentPlayerCount = this.previousPlayerCount;
@@ -83,6 +98,6 @@ export class GamePlayerCardComponent implements OnInit {
     currentPlayer.round -= 1;
 
     // set inRound false
-    this.inRound = false;*/
+    this.gameService.inRound = false;
   }
 }

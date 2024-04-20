@@ -23,6 +23,8 @@ import { GameSettingsModalComponent } from './shared/modals/game-settings-modal/
 import { GameSettingsButtonComponent } from './shared/buttons/game-settings-button/game-settings-button.component';
 import { GameBackButtonComponent } from './shared/buttons/game-back-button/game-back-button.component';
 import { GamePlayerCardComponent } from './shared/game-player-card/game-player-card.component';
+import { GameControlsComponent } from './shared/game-controls/game-controls.component';
+import { GameDataTableComponent } from './shared/game-data-table/game-data-table.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { GamePlayerCardComponent } from './shared/game-player-card/game-player-c
     GameSettingsButtonComponent,
     GameBackButtonComponent,
     GamePlayerCardComponent,
+    GameControlsComponent,
+    GameDataTableComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TextToSpeechService, VoiceToTextService, SoundService],

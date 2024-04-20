@@ -4,6 +4,7 @@ import { GameSettingsService } from '../../../services/game-settings/game-settin
 import { VoiceToTextService } from '../../../services/voice-to-text/voice-to-text.service';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../../../services/modal-service/modal.service';
+import { GameService } from '../../../services/game-service/game.service';
 
 @Component({
   selector: 'app-game-settings-modal',
@@ -13,15 +14,18 @@ import { ModalService } from '../../../services/modal-service/modal.service';
 export class GameSettingsModalComponent implements OnInit {
   public modalName: string = 'gameSettingsModal';
   public gameSettings: GameSettings;
-  public isSettingsModalOpen = false;
   private modalSubscription: Subscription;
+
+  public isSettingsModalOpen = false;
+  public isLegEnd = false;
 
   closeModalEvent = new EventEmitter<void>();
 
   constructor(
     private modalService: ModalService,
     private voiceToTextService: VoiceToTextService,
-    private gameSettingsService: GameSettingsService
+    private gameSettingsService: GameSettingsService,
+    private gameService: GameService
   ) {
     this.modalSubscription = this.modalService
       .isModalOpen(this.modalName)
@@ -33,6 +37,7 @@ export class GameSettingsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameSettings = this.gameSettingsService.gameSettings;
+    this.isLegEnd = this.gameService.legEnd;
   }
 
   ngOnDestroy() {
@@ -73,5 +78,13 @@ export class GameSettingsModalComponent implements OnInit {
     if (this.gameSettings.voiceToTextEnabled) {
       this.voiceToTextService.stopListening();
     }
+  }
+
+  resetRound(): void {
+    this.gameService.legEnd = true;
+  }
+
+  resetGame(): void {
+    this.gameService.setupGame();
   }
 }
