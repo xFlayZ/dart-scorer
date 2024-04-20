@@ -6,37 +6,40 @@ import { TextToSpeechService } from '../services/text-to-speech.service';
 import { SoundService } from '../services/sound.service';
 import confetti from 'canvas-confetti';
 import { VoiceToTextService } from '../services/voice-to-text.service';
+import { GameSettingsService } from '../services/game-settings/game-settings.service';
 
 @Component({
   selector: 'app-dart-game-single-out',
   templateUrl: './dart-game-single-out.component.html',
-  styleUrls: ['./dart-game-single-out.component.scss']
+  styleUrls: ['./dart-game-single-out.component.scss'],
 })
-
 export class DartGameSingleOutComponent implements OnInit {
   public gameData: GameData[] = [];
   public playerCount = 0;
   public currentPlayerCount = 0;
   public previousPlayerCount = 0;
   public lastRoundScore = 0;
-  public lastThrownNumber = "-";
+  public lastThrownNumber = '-';
   public possibleCheckout = '-';
   public inRound = true;
   public winnerModalOpen = false;
   public legEnd = false;
   public isOneActivePlayer = true;
-  public speakToTextEnabled = true;
-  public playSoundEnabled = true;
-  public animationEnabled = true;
-  public voiceToTextEnabled = false;
 
   @Input() players: string[] = [];
   @Input() scoreValue = '';
 
-  constructor(private checkoutService: CheckoutService, private textToSpeechService: TextToSpeechService, private soundService: SoundService, private voiceToTextService: VoiceToTextService, private ngZone: NgZone) { }
+  constructor(
+    private checkoutService: CheckoutService,
+    private textToSpeechService: TextToSpeechService,
+    private soundService: SoundService,
+    private voiceToTextService: VoiceToTextService,
+    private ngZone: NgZone,
+    private gameSettingsService: GameSettingsService
+  ) {}
 
   ngOnInit(): void {
-    this.loadSettingsFromLocalStorage();
+    this.gameSettingsService.loadSettings();
     this.setupGame();
   }
 
@@ -44,15 +47,17 @@ export class DartGameSingleOutComponent implements OnInit {
     if (this.inRound && !this.legEnd) {
       const currentPlayer = this.gameData[this.currentPlayerCount];
       const darts = ['firstDart', 'secondDart', 'thirdDart'];
-      const emptyDartIndex = darts.findIndex(dart => currentPlayer[dart] === '-');
-      
+      const emptyDartIndex = darts.findIndex(
+        (dart) => currentPlayer[dart] === '-'
+      );
+
       if (emptyDartIndex !== -1) {
         this.calcScore(thrownNumber);
         currentPlayer[darts[emptyDartIndex]] = thrownNumber;
         this.calculateCheckoutCurrentPlayer();
 
         this.specialThrownSounds(thrownNumber);
-        
+
         if (emptyDartIndex === 2 || currentPlayer.score <= 0) {
           this.inRound = false;
           this.stopScoreToVoice();
@@ -73,7 +78,7 @@ export class DartGameSingleOutComponent implements OnInit {
     const scoreValueNum = parseInt(this.scoreValue, 10);
     const shuffledPlayers = shuffleArray(this.players);
 
-    this.gameData = shuffledPlayers.map(player => ({
+    this.gameData = shuffledPlayers.map((player) => ({
       player: player.name,
       score: scoreValueNum,
       wins: 0,
@@ -87,13 +92,13 @@ export class DartGameSingleOutComponent implements OnInit {
       round: 1,
       game: 0,
       isActive: true,
-      winnerSong: player.winnerSong
+      winnerSong: player.winnerSong,
     }));
 
     this.playerCount = this.players.length - 1;
     localStorage.setItem('gameData', JSON.stringify(this.gameData));
 
-    if (this.speakToTextEnabled) {
+    if (this.gameSettingsService.gameSettings.speakToTextEnabled) {
       this.speakText();
     }
 
@@ -111,7 +116,7 @@ export class DartGameSingleOutComponent implements OnInit {
           this.gameData.push(lastPlayer);
         }
 
-        this.gameData.forEach(player => {
+        this.gameData.forEach((player) => {
           if (player) {
             player.roundTotal = 0;
             player.firstDart = '-';
@@ -135,10 +140,13 @@ export class DartGameSingleOutComponent implements OnInit {
       const currentPlayer = this.gameData[this.currentPlayerCount];
 
       if (!currentPlayer.isActive) {
-        this.nextPlayer()
+        this.nextPlayer();
       }
 
-      if (this.speakToTextEnabled && currentPlayer.isActive) {
+      if (
+        this.gameSettingsService.gameSettings.speakToTextEnabled &&
+        currentPlayer.isActive
+      ) {
         this.speakText();
       }
 
@@ -153,7 +161,7 @@ export class DartGameSingleOutComponent implements OnInit {
       if (currentPlayer.score === 0) {
         this.winnerModalOpen = true;
         this.celebrate(500);
-        this.playSound("victory", currentPlayer.winnerSong);
+        this.playSound('victory', currentPlayer.winnerSong);
       } else {
         if (currentPlayer.score < 0) {
           this.deleteLastDart();
@@ -162,35 +170,41 @@ export class DartGameSingleOutComponent implements OnInit {
         }
         if (this.lastRoundScore > currentPlayer.highestRound) {
           if (this.lastRoundScore > 180) {
-            currentPlayer.highestRound = 180
+            currentPlayer.highestRound = 180;
           } else {
-            currentPlayer.highestRound = this.lastRoundScore
+            currentPlayer.highestRound = this.lastRoundScore;
           }
         }
         this.lastRoundScore = 0;
-        currentPlayer.roundAverage = parseFloat((currentPlayer.roundTotal / currentPlayer.round).toFixed(2));
+        currentPlayer.roundAverage = parseFloat(
+          (currentPlayer.roundTotal / currentPlayer.round).toFixed(2)
+        );
 
         if (currentPlayer.isActive) {
           currentPlayer.round += 1;
-          this.previousPlayerCount = this.currentPlayerCount
+          this.previousPlayerCount = this.currentPlayerCount;
         }
-        
-        this.currentPlayerCount = (this.playerCount > this.currentPlayerCount) ? this.currentPlayerCount + 1 : 0;
+
+        this.currentPlayerCount =
+          this.playerCount > this.currentPlayerCount
+            ? this.currentPlayerCount + 1
+            : 0;
 
         currentPlayer = this.gameData[this.currentPlayerCount];
 
         if (!currentPlayer.isActive) {
-          this.nextPlayer()
-
+          this.nextPlayer();
         }
 
         currentPlayer.firstDart = '-';
         currentPlayer.secondDart = '-';
         currentPlayer.thirdDart = '-';
-
       }
       this.calculateCheckoutCurrentPlayer();
-      if (this.speakToTextEnabled && currentPlayer.isActive) {
+      if (
+        this.gameSettingsService.gameSettings.speakToTextEnabled &&
+        currentPlayer.isActive
+      ) {
         this.speakText();
       }
       this.inRound = true;
@@ -199,14 +213,14 @@ export class DartGameSingleOutComponent implements OnInit {
     });
   }
 
-  backToLastPlayer() { 
+  backToLastPlayer() {
     // delete last darts currentPlayer
     this.deleteLastDart();
     this.deleteLastDart();
     this.deleteLastDart();
 
     // go back to last player
-    this.currentPlayerCount = this.previousPlayerCount
+    this.currentPlayerCount = this.previousPlayerCount;
 
     // get currentPlayer
     const currentPlayer = this.gameData[this.currentPlayerCount];
@@ -220,8 +234,12 @@ export class DartGameSingleOutComponent implements OnInit {
 
   calcScore(thrownNumber: string) {
     const multiplier = thrownNumber.charAt(0);
-    const number = (multiplier === 'T' || multiplier === 'D') ? thrownNumber.slice(1) : thrownNumber;
-    const multiplierFactor = (multiplier === 'T') ? 3 : (multiplier === 'D') ? 2 : 1;
+    const number =
+      multiplier === 'T' || multiplier === 'D'
+        ? thrownNumber.slice(1)
+        : thrownNumber;
+    const multiplierFactor =
+      multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
     const score = parseInt(number) * multiplierFactor;
 
     this.lastRoundScore += score;
@@ -232,27 +250,31 @@ export class DartGameSingleOutComponent implements OnInit {
 
   deleteLastDart() {
     this.ngZone.run(() => {
-    const currentPlayer = this.gameData[this.currentPlayerCount];
-    const darts = ['thirdDart', 'secondDart', 'firstDart'];
-    const filledDartIndex = darts.findIndex(dart => typeof currentPlayer[dart] === 'string' && currentPlayer[dart] !== '-');
+      const currentPlayer = this.gameData[this.currentPlayerCount];
+      const darts = ['thirdDart', 'secondDart', 'firstDart'];
+      const filledDartIndex = darts.findIndex(
+        (dart) =>
+          typeof currentPlayer[dart] === 'string' && currentPlayer[dart] !== '-'
+      );
 
-    if (filledDartIndex !== -1) {
+      if (filledDartIndex !== -1) {
         const score = currentPlayer[darts[filledDartIndex]] as string;
         const multiplier = score.charAt(0);
-        const number = (multiplier === 'T' || multiplier === 'D') ? score.slice(1) : score;
-        const multiplierFactor = (multiplier === 'T') ? 3 : (multiplier === 'D') ? 2 : 1;
+        const number =
+          multiplier === 'T' || multiplier === 'D' ? score.slice(1) : score;
+        const multiplierFactor =
+          multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
 
         this.lastRoundScore -= parseInt(number) * multiplierFactor;
         currentPlayer.roundTotal -= parseInt(number) * multiplierFactor;
         currentPlayer.score += parseInt(number) * multiplierFactor;
         currentPlayer[darts[filledDartIndex]] = '-';
         this.calculateCheckoutCurrentPlayer();
-    }
-    this.inRound = true;
-    localStorage.setItem('gameData', JSON.stringify(this.gameData));
-  });
-}
-
+      }
+      this.inRound = true;
+      localStorage.setItem('gameData', JSON.stringify(this.gameData));
+    });
+  }
 
   closeWinnerModal() {
     const currentPlayer = this.gameData[this.currentPlayerCount];
@@ -274,8 +296,8 @@ export class DartGameSingleOutComponent implements OnInit {
     } else if (currentPlayer.firstDart !== '-') {
       checkout = this.checkoutService.getTwoDartsCheckout(score);
     }
-    
-    this.possibleCheckout = (checkout !== '') ? checkout : "-";
+
+    this.possibleCheckout = checkout !== '' ? checkout : '-';
     localStorage.setItem('gameData', JSON.stringify(this.gameData));
   }
 
@@ -285,31 +307,37 @@ export class DartGameSingleOutComponent implements OnInit {
 
   updateDartValue(dartType: string) {
     const currentPlayer = this.gameData[this.currentPlayerCount];
-    if (currentPlayer[dartType] != "-") {
+    if (currentPlayer[dartType] != '-') {
+      let updateDartValue = '-';
 
-      let updateDartValue = "-"
-
-      if (dartType == "firstDart") {
-        updateDartValue = currentPlayer.firstDart
-      } else if (dartType == "secondDart") {
-        updateDartValue = currentPlayer.secondDart
-      } else if (dartType == "thirdDart") {
-        updateDartValue = currentPlayer.thirdDart
+      if (dartType == 'firstDart') {
+        updateDartValue = currentPlayer.firstDart;
+      } else if (dartType == 'secondDart') {
+        updateDartValue = currentPlayer.secondDart;
+      } else if (dartType == 'thirdDart') {
+        updateDartValue = currentPlayer.thirdDart;
       }
 
       let multiplier = updateDartValue.charAt(0);
-      let number = (multiplier === 'T' || multiplier === 'D') ? updateDartValue.slice(1) : updateDartValue;
-      let multiplierFactor = (multiplier === 'T') ? 3 : (multiplier === 'D') ? 2 : 1;
+      let number =
+        multiplier === 'T' || multiplier === 'D'
+          ? updateDartValue.slice(1)
+          : updateDartValue;
+      let multiplierFactor =
+        multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
       let score = parseInt(number) * multiplierFactor;
-  
+
       currentPlayer.roundTotal -= score;
       currentPlayer.score += score;
 
       multiplier = this.lastThrownNumber.charAt(0);
-      number = (multiplier === 'T' || multiplier === 'D') ? this.lastThrownNumber.slice(1) : this.lastThrownNumber;
-      multiplierFactor = (multiplier === 'T') ? 3 : (multiplier === 'D') ? 2 : 1;
+      number =
+        multiplier === 'T' || multiplier === 'D'
+          ? this.lastThrownNumber.slice(1)
+          : this.lastThrownNumber;
+      multiplierFactor = multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
       score = parseInt(number) * multiplierFactor;
-  
+
       currentPlayer.roundTotal += score;
       currentPlayer.score -= score;
 
@@ -321,15 +349,15 @@ export class DartGameSingleOutComponent implements OnInit {
   speakText(): void {
     const currentPlayer = this.gameData[this.currentPlayerCount];
 
-    let possibleCheckoutText = ``
-    if (this.possibleCheckout != "-") {
-      possibleCheckoutText = `Möglicher Checkout: ${this.possibleCheckout}`
+    let possibleCheckoutText = ``;
+    if (this.possibleCheckout != '-') {
+      possibleCheckoutText = `Möglicher Checkout: ${this.possibleCheckout}`;
     }
 
     let textToSpeak = `${currentPlayer.player} | Verbleibender Score: ${currentPlayer.score} | ${possibleCheckoutText}`;
 
     if (currentPlayer.score == 0) {
-      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`
+      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`;
     }
 
     this.textToSpeechService.speak(textToSpeak);
@@ -337,77 +365,80 @@ export class DartGameSingleOutComponent implements OnInit {
 
   playSound(path: string, sound: string): void {
     this.ngZone.run(() => {
-    if (this.playSoundEnabled) {
-      this.soundService.stopSound();
-      this.soundService.playSound(`assets/sounds/${path}/${sound}.mp3`);
-    }
-  });
+      if (this.gameSettingsService.gameSettings.playSoundEnabled) {
+        this.soundService.stopSound();
+        this.soundService.playSound(`assets/sounds/${path}/${sound}.mp3`);
+      }
+    });
   }
 
   specialThrownSounds(thrownNumber: string) {
     this.ngZone.run(() => {
-    const currentPlayer = this.gameData[this.currentPlayerCount];
-    if (currentPlayer.score < 0) {
-      this.playSound("special", "fail")
-    } else {
-      if (this.lastRoundScore == 180 && currentPlayer.thirdDart != "-") {
-        this.playSound("special", "score-180");
-        this.celebrate(500);
-      } else if (this.lastRoundScore >= 100 && currentPlayer.thirdDart != "-") {
-        this.playSound("special", "nice-shot");
-        this.celebrate(125);
-      } else if (thrownNumber == "50") {
-        this.playSound("special", "clap");
-        this.celebrate(125);
-      } else if (thrownNumber == "T20") {
-        this.playSound("special", "clap");
-        this.celebrate(125);
-      } else if (this.lastRoundScore == 0 && currentPlayer.thirdDart != "-") {
-        this.playSound("special", "fail")
+      const currentPlayer = this.gameData[this.currentPlayerCount];
+      if (currentPlayer.score < 0) {
+        this.playSound('special', 'fail');
+      } else {
+        if (this.lastRoundScore == 180 && currentPlayer.thirdDart != '-') {
+          this.playSound('special', 'score-180');
+          this.celebrate(500);
+        } else if (
+          this.lastRoundScore >= 100 &&
+          currentPlayer.thirdDart != '-'
+        ) {
+          this.playSound('special', 'nice-shot');
+          this.celebrate(125);
+        } else if (thrownNumber == '50') {
+          this.playSound('special', 'clap');
+          this.celebrate(125);
+        } else if (thrownNumber == 'T20') {
+          this.playSound('special', 'clap');
+          this.celebrate(125);
+        } else if (this.lastRoundScore == 0 && currentPlayer.thirdDart != '-') {
+          this.playSound('special', 'fail');
+        }
       }
-    }  
-  });
+    });
   }
 
   celebrate(particleCount: number) {
-    if (this.animationEnabled) {
+    if (this.gameSettingsService.gameSettings.animationEnabled) {
       const duration = 5000; // in milliseconds
-  
+
       confetti({
         particleCount: particleCount,
         spread: 320,
         origin: { y: 0.4 },
       });
-    
+
       // Clear confetti after a certain duration
       setTimeout(() => confetti.reset(), duration);
     }
   }
 
   voiceToScore() {
-    if (this.voiceToTextEnabled) {
-      this.voiceToTextService.startListening("", (transcript: string) => {
+    if (this.gameSettingsService.gameSettings.voiceToTextEnabled) {
+      this.voiceToTextService.startListening('', (transcript: string) => {
         const cleanedTranscript = transcript.trim().toLowerCase();
-        const words = cleanedTranscript.split(" ");
+        const words = cleanedTranscript.split(' ');
         console.log(cleanedTranscript);
-        if (words.length === 2 && words[0] === "treffer") {
+        if (words.length === 2 && words[0] === 'treffer') {
           const thrownNumber = words[1];
           console.log(thrownNumber.toUpperCase());
           this.onThrownVoiceNumberChange(thrownNumber.toUpperCase());
         }
-        if (cleanedTranscript === "nächster spieler") {
+        if (cleanedTranscript === 'nächster spieler') {
           this.nextPlayer();
           //this.stopScoreToVoice();
         }
-        if (cleanedTranscript === "dart löschen") {
+        if (cleanedTranscript === 'dart löschen') {
           this.deleteLastDart();
         }
-      }); 
+      });
     }
   }
 
   stopScoreToVoice() {
-    if (this.voiceToTextEnabled) {
+    if (this.gameSettingsService.gameSettings.voiceToTextEnabled) {
       this.voiceToTextService.stopListening();
     }
   }
@@ -417,15 +448,17 @@ export class DartGameSingleOutComponent implements OnInit {
       const currentPlayer = this.gameData[this.currentPlayerCount];
       if (this.inRound && !this.legEnd) {
         const darts = ['firstDart', 'secondDart', 'thirdDart'];
-        const emptyDartIndex = darts.findIndex(dart => currentPlayer[dart] === '-');
-        
+        const emptyDartIndex = darts.findIndex(
+          (dart) => currentPlayer[dart] === '-'
+        );
+
         if (emptyDartIndex !== -1) {
           this.calcScore(thrownNumber);
           currentPlayer[darts[emptyDartIndex]] = thrownNumber;
           this.calculateCheckoutCurrentPlayer();
-  
+
           this.specialThrownSounds(thrownNumber);
-          
+
           if (emptyDartIndex === 2 || currentPlayer.score <= 0) {
             this.inRound = false;
           }
@@ -433,29 +466,6 @@ export class DartGameSingleOutComponent implements OnInit {
       }
       this.lastThrownNumber = thrownNumber;
     });
-  }
-  
-
-  loadSettingsFromLocalStorage(): void {
-    const speakToTextEnabled = localStorage.getItem('speakToTextEnabled');
-    if (speakToTextEnabled !== null) {
-      this.speakToTextEnabled = speakToTextEnabled === 'true';
-    }
-  
-    const playSoundEnabled = localStorage.getItem('playSoundEnabled');
-    if (playSoundEnabled !== null) {
-      this.playSoundEnabled = playSoundEnabled === 'true';
-    }
-  
-    const animationEnabled = localStorage.getItem('animationEnabled');
-    if (animationEnabled !== null) {
-      this.animationEnabled = animationEnabled === 'true';
-    }
-
-    const voiceToTextEnabled = localStorage.getItem('voiceToTextEnabled');
-    if (voiceToTextEnabled !== null) {
-      this.voiceToTextEnabled = voiceToTextEnabled === 'true';
-    }
   }
 
   resetRound(): void {
@@ -468,8 +478,8 @@ export class DartGameSingleOutComponent implements OnInit {
 
   togglePlayerStatuss(player: any): void {
     const currentPlayer = this.gameData[this.currentPlayerCount];
-    this.checkIfOneActivePlayer(player)
-    
+    this.checkIfOneActivePlayer(player);
+
     if (!this.isOneActivePlayer && !this.legEnd) {
       // add confirm modal
       this.legEnd = true;
@@ -483,6 +493,6 @@ export class DartGameSingleOutComponent implements OnInit {
 
   checkIfOneActivePlayer(player: any) {
     player.isActive = !player.isActive;
-    this.isOneActivePlayer = this.gameData.some(player => player.isActive);
+    this.isOneActivePlayer = this.gameData.some((player) => player.isActive);
   }
 }

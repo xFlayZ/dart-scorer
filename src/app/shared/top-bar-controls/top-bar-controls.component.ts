@@ -1,86 +1,65 @@
 import { Component, EventEmitter } from '@angular/core';
 import { VoiceToTextService } from '../../services/voice-to-text.service';
+import { GameSettingsService } from '../../services/game-settings/game-settings.service';
+import { GameSettings } from '../../interfaces/game-settings.interface';
 
 @Component({
   selector: 'app-top-bar-controls',
   templateUrl: './top-bar-controls.component.html',
-  styleUrl: './top-bar-controls.component.scss'
+  styleUrl: './top-bar-controls.component.scss',
 })
 export class TopBarControlsComponent {
   public isSettingsModalOpen = false;
-  public speakToTextEnabled = true;
-  public playSoundEnabled = true;
-  public animationEnabled = true;
-  public voiceToTextEnabled = false;
+  public gameSettings: GameSettings;
 
   closeModalEvent = new EventEmitter<void>();
 
-  constructor(private voiceToTextService: VoiceToTextService) {}
+  constructor(
+    private voiceToTextService: VoiceToTextService,
+    private gameSettingsService: GameSettingsService
+  ) {
+    this.gameSettings = this.gameSettingsService.gameSettings;
+  }
 
   openSettingsModal() {
-    this.loadSettingsFromLocalStorage();
     this.isSettingsModalOpen = true;
   }
 
   closeSettingsModal() {
     this.closeModalEvent.emit();
+    this.gameSettingsService.loadSettings();
+    this.gameSettings = this.gameSettingsService.gameSettings;
     this.isSettingsModalOpen = false;
   }
 
   toggleSpeakToTextEnabled(): void {
-    this.speakToTextEnabled = !this.speakToTextEnabled;
-    localStorage.setItem('speakToTextEnabled', String(this.speakToTextEnabled));
+    this.gameSettings.speakToTextEnabled =
+      !this.gameSettings.speakToTextEnabled;
+    this.gameSettingsService.saveSettings();
   }
 
-  
   togglePlaySoundEnabled(): void {
-    this.playSoundEnabled = !this.playSoundEnabled;
-    localStorage.setItem('playSoundEnabled', String(this.playSoundEnabled));
+    this.gameSettings.playSoundEnabled = !this.gameSettings.playSoundEnabled;
+    this.gameSettingsService.saveSettings();
   }
-  
 
   toggleAnimationEnabled(): void {
-    this.animationEnabled = !this.animationEnabled;
-    localStorage.setItem('animationEnabled', String(this.animationEnabled));
+    this.gameSettings.animationEnabled = !this.gameSettings.animationEnabled;
+    this.gameSettingsService.saveSettings();
   }
 
   toggleVoiceToTextEnabled(): void {
-    this.voiceToTextEnabled = !this.voiceToTextEnabled;
-    if (this.voiceToTextEnabled) {
-      // add startVoice later
-    } else {
+    this.gameSettings.voiceToTextEnabled =
+      !this.gameSettings.voiceToTextEnabled;
+    if (!this.gameSettings.voiceToTextEnabled) {
       this.stopScoreToVoice();
     }
-    localStorage.setItem('voiceToTextEnabled', String(this.voiceToTextEnabled));
+    this.gameSettingsService.saveSettings();
   }
 
   stopScoreToVoice() {
-    if (this.voiceToTextEnabled) {
+    if (this.gameSettings.voiceToTextEnabled) {
       this.voiceToTextService.stopListening();
     }
   }
-  
-
-  loadSettingsFromLocalStorage(): void {
-    const speakToTextEnabled = localStorage.getItem('speakToTextEnabled');
-    if (speakToTextEnabled !== null) {
-      this.speakToTextEnabled = speakToTextEnabled === 'true';
-    }
-  
-    const playSoundEnabled = localStorage.getItem('playSoundEnabled');
-    if (playSoundEnabled !== null) {
-      this.playSoundEnabled = playSoundEnabled === 'true';
-    }
-  
-    const animationEnabled = localStorage.getItem('animationEnabled');
-    if (animationEnabled !== null) {
-      this.animationEnabled = animationEnabled === 'true';
-    }
-
-    const voiceToTextEnabled = localStorage.getItem('voiceToTextEnabled');
-    if (voiceToTextEnabled !== null) {
-      this.voiceToTextEnabled = voiceToTextEnabled === 'true';
-    }
-  }
-
 }
