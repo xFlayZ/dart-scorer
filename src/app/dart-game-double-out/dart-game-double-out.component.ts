@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, NgZone, OnInit } from '@angular/core';
 import { shuffleArray } from '../helpers';
 import { GameData } from '../interfaces/game-data.interface';
-import { CheckoutDoubleOutService } from '../services/checkout-double-out.service';
-import { TextToSpeechService } from '../services/text-to-speech.service';
-import { SoundService } from '../services/sound.service';
+import { CheckoutDoubleOutService } from '../services/checkout-double-out/checkout-double-out.service';
+import { TextToSpeechService } from '../services/text-to-speech/text-to-speech.service';
+import { SoundService } from '../services/sound/sound.service';
 import confetti from 'canvas-confetti';
-import { VoiceToTextService } from '../services/voice-to-text.service';
+import { VoiceToTextService } from '../services/voice-to-text/voice-to-text.service';
 
 @Component({
   selector: 'app-dart-game-double-out',

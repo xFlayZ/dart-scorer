@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { shuffleArray } from '../helpers';
 import { GameDataAroundTheClock } from '../interfaces/game-data-around-the-clock.interface';
-import { TextToSpeechService } from '../services/text-to-speech.service';
+import { TextToSpeechService } from '../services/text-to-speech/text-to-speech.service';
 
 @Component({
   selector: 'app-dart-game-around-the-clock',

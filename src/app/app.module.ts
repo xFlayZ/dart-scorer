@@ -13,12 +13,15 @@ import { DartWinnerModalComponent } from './shared/modals/dart-winner-modal/dart
 import { FooterComponent } from './shared/footer/footer.component';
 import { DartGameAroundTheClockComponent } from './dart-game-around-the-clock/dart-game-around-the-clock.component';
 import { DartGameDoubleOutComponent } from './dart-game-double-out/dart-game-double-out.component';
-import { TextToSpeechService } from './services/text-to-speech.service';
-import { SoundService } from './services/sound.service';
+import { TextToSpeechService } from './services/text-to-speech/text-to-speech.service';
+import { SoundService } from './services/sound/sound.service';
 import { ChooseSongModalComponent } from './shared/modals/choose-song-modal/choose-song-modal.component';
-import { VoiceToTextService } from './services/voice-to-text.service';
+import { VoiceToTextService } from './services/voice-to-text/voice-to-text.service';
 import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal-confirm-action.component';
 import { TopBarControlsComponent } from './shared/top-bar-controls/top-bar-controls.component';
+import { GameSettingsModalComponent } from './shared/modals/game-settings-modal/game-settings-modal.component';
+import { GameSettingsButtonComponent } from './shared/buttons/game-settings-button/game-settings-button.component';
+import { GameBackButtonComponent } from './shared/buttons/game-back-button/game-back-button.component';
 
 @NgModule({
   declarations: [
@@ -34,14 +37,13 @@ import { TopBarControlsComponent } from './shared/top-bar-controls/top-bar-contr
     DartGameDoubleOutComponent,
     ChooseSongModalComponent,
     ModalConfirmActionComponent,
-    TopBarControlsComponent
+    TopBarControlsComponent,
+    GameSettingsModalComponent,
+    GameSettingsButtonComponent,
+    GameBackButtonComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [TextToSpeechService, VoiceToTextService, SoundService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

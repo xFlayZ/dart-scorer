@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, NgZone, OnInit } from '@angular/core';
-import { CheckoutService } from '../services/checkout.service';
+import { CheckoutService } from '../services/checkout/checkout.service';
 import { GameData } from '../interfaces/game-data.interface';
 import { shuffleArray } from '../helpers';
-import { TextToSpeechService } from '../services/text-to-speech.service';
-import { SoundService } from '../services/sound.service';
+import { TextToSpeechService } from '../services/text-to-speech/text-to-speech.service';
+import { SoundService } from '../services/sound/sound.service';
 import confetti from 'canvas-confetti';
-import { VoiceToTextService } from '../services/voice-to-text.service';
+import { VoiceToTextService } from '../services/voice-to-text/voice-to-text.service';
 import { GameSettingsService } from '../services/game-settings/game-settings.service';
 
 @Component({

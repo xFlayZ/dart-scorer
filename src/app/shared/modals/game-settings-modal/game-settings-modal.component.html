@@ -1,0 +1,232 @@
+<!-- settings modal -->
+
+<div
+  *ngIf="isSettingsModalOpen"
+  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50"
+>
+  <div class="relative mx-auto max-w-lg">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="modal-content">
+        <div class="modal-header flex justify-between border-b pb-4">
+          <h3 class="modal-title text-lg font-semibold">Einstellungen</h3>
+          <button
+            class="modal-close text-gray-600 hover:text-gray-800"
+            (click)="closeSettingsModal()"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body pt-4">
+          <!-- audio button -->
+          <div class="settings-audio">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleSpeakToTextEnabled()"
+                [(ngModel)]="gameSettings.speakToTextEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sprachansagen</span>
+            </label>
+          </div>
+          <!-- audio button end -->
+          <!-- special score button -->
+          <div class="settings-sounds">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="togglePlaySoundEnabled()"
+                [(ngModel)]="gameSettings.playSoundEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sounds</span>
+            </label>
+          </div>
+          <!-- special score button end -->
+          <!-- animation toggle button -->
+          <div class="settings-animation">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleAnimationEnabled()"
+                [(ngModel)]="gameSettings.animationEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Effekte</span>
+            </label>
+          </div>
+          <!-- animation toggle button end -->
+          <!-- voice to text toggle button -->
+          <div class="settings-voice">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleVoiceToTextEnabled()"
+                [(ngModel)]="gameSettings.voiceToTextEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sprachsteuerung</span>
+            </label>
+          </div>
+          <!-- voice to text toggle button end -->
+          <!-- reset round button -->
+          <!--<div class="round-reset-button">
+            <button
+              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="resetRound()"
+              [ngClass]="{
+                'opacity-50 cursor-not-allowed': legEnd
+              }"
+              [disabled]="legEnd"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Runde Zurücksetzen
+            </button>
+          </div>-->
+          <!-- reset round button end -->
+          <!-- game reset button -->
+          <!-- <div class="game-reset-button">
+            <button
+              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="resetGame()"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Spiel Zurücksetzen
+            </button> 
+          </div> -->
+          <!-- game reset button end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- settings modal -->
+
+<div
+  *ngIf="isSettingsModalOpen"
+  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50"
+>
+  <div class="relative mx-auto max-w-lg">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="modal-content">
+        <div class="modal-header flex justify-between border-b pb-4">
+          <h3 class="modal-title text-lg font-semibold">Einstellungen</h3>
+          <button
+            class="modal-close text-gray-600 hover:text-gray-800"
+            (click)="closeSettingsModal()"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body pt-4">
+          <!-- audio button -->
+          <div class="settings-audio">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleSpeakToTextEnabled()"
+                [(ngModel)]="gameSettings.speakToTextEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sprachansagen</span>
+            </label>
+          </div>
+          <!-- audio button end -->
+          <!-- special score button -->
+          <div class="settings-sounds">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="togglePlaySoundEnabled()"
+                [(ngModel)]="gameSettings.playSoundEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sounds</span>
+            </label>
+          </div>
+          <!-- special score button end -->
+          <!-- animation toggle button -->
+          <div class="settings-animation">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleAnimationEnabled()"
+                [(ngModel)]="gameSettings.animationEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Effekte</span>
+            </label>
+          </div>
+          <!-- animation toggle button end -->
+          <!-- voice to text toggle button -->
+          <div class="settings-voice">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleVoiceToTextEnabled()"
+                [(ngModel)]="gameSettings.voiceToTextEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Sprachsteuerung</span>
+            </label>
+          </div>
+          <!-- voice to text toggle button end -->
+          <!-- reset round button -->
+          <!--<div class="round-reset-button">
+            <button
+              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="resetRound()"
+              [ngClass]="{
+                'opacity-50 cursor-not-allowed': legEnd
+              }"
+              [disabled]="legEnd"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Runde Zurücksetzen
+            </button>
+          </div>-->
+          <!-- reset round button end -->
+          <!-- game reset button -->
+          <!-- <div class="game-reset-button">
+            <button
+              class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="resetGame()"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Spiel Zurücksetzen
+            </button> 
+          </div> -->
+          <!-- game reset button end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { SoundService } from '../../../services/sound.service';
+import { SoundService } from '../../../services/sound/sound.service';
 
 interface Player {
   name: string;
@@ -9,11 +9,9 @@ interface Player {
 @Component({
   selector: 'app-choose-song-modal',
   templateUrl: './choose-song-modal.component.html',
-  styleUrl: './choose-song-modal.component.scss'
+  styleUrl: './choose-song-modal.component.scss',
 })
-
 export class ChooseSongModalComponent {
-
   @Output() songSelected: EventEmitter<string> = new EventEmitter();
   players: Player[] = [];
 
@@ -26,12 +24,12 @@ export class ChooseSongModalComponent {
 
   currentPlayerIndex: number = 0;
 
-  songs: { name: string, value: string }[] = [
+  songs: { name: string; value: string }[] = [
     { name: 'The Darts Anthem', value: 'default' },
     { name: 'Shakira - Waka Waka', value: 'waka-waka' },
     { name: 'FC Bayern Torhymne', value: 'fc-bayern' },
     { name: 'SV Werder Bremen Toryhymne', value: '500-miles' },
-    { name: 'Eintracht Braunschweig Torhymne', value: 'btsv'},
+    { name: 'Eintracht Braunschweig Torhymne', value: 'btsv' },
     { name: 'Around The World', value: 'around-the-world' },
     { name: 'Major Tom', value: 'major-tom' },
     { name: 'Never Gonna Give You Up', value: 'never-gonna-give-you-up' },
@@ -48,10 +46,10 @@ export class ChooseSongModalComponent {
     { name: 'Pokemon', value: 'pokemon' },
     { name: 'Wavin Flag', value: 'wavin-flag' },
     { name: 'Whenever, Whereever', value: 'whenever-whereever' },
-    { name: 'I Will Survive (Lalala)', value: 'freiburg'},
+    { name: 'I Will Survive (Lalala)', value: 'freiburg' },
   ];
 
-  constructor(private soundService: SoundService) { }
+  constructor(private soundService: SoundService) {}
 
   openModal(index: number): void {
     const savedPlayers = localStorage.getItem('players');
@@ -64,7 +62,6 @@ export class ChooseSongModalComponent {
     this.totalPages = Math.ceil(this.songs.length / this.pageSize);
     this.updateDisplayedSongs();
   }
-  
 
   closeModal(): void {
     this.isOpen = false;
@@ -72,15 +69,15 @@ export class ChooseSongModalComponent {
   }
 
   selectSong(songValue: string): void {
-    this.addWinnerSong(this.currentPlayerIndex, songValue)
+    this.addWinnerSong(this.currentPlayerIndex, songValue);
     this.soundService.stopSound();
     this.closeModal();
   }
 
   playSound(event: Event, sound: string): void {
     event.stopPropagation();
-      this.soundService.stopSound();
-      this.soundService.playSound(`assets/sounds/victory/${sound}.mp3`);
+    this.soundService.stopSound();
+    this.soundService.playSound(`assets/sounds/victory/${sound}.mp3`);
   }
 
   addWinnerSong(index: number, winnerSong: string): void {
