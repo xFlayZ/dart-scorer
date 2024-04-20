@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { shuffleArray } from '../helpers';
-import { GameDataAroundTheClock } from '../interfaces/game-data-around-the-clock';
+import { GameDataAroundTheClock } from '../interfaces/game-data-around-the-clock.interface';
 import { TextToSpeechService } from '../services/text-to-speech.service';
 
 @Component({
   selector: 'app-dart-game-around-the-clock',
   templateUrl: './dart-game-around-the-clock.component.html',
-  styleUrl: './dart-game-around-the-clock.component.scss'
+  styleUrl: './dart-game-around-the-clock.component.scss',
 })
 export class DartGameAroundTheClockComponent implements OnInit {
   public gameData: GameDataAroundTheClock[] = [];
   public playerCount = 0;
   public currentPlayerCount = 0;
-  public lastThrownNumber = "-";
+  public lastThrownNumber = '-';
   public winnerModalOpen = false;
   public inRound = true;
   public isWinner = false;
@@ -37,7 +37,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
 
     const shuffledPlayers = shuffleArray(this.players);
 
-    this.gameData = shuffledPlayers.map(player => ({
+    this.gameData = shuffledPlayers.map((player) => ({
       player: player.name,
       score: 1,
       wins: 0,
@@ -82,292 +82,310 @@ export class DartGameAroundTheClockComponent implements OnInit {
   }
 
   onThrownNumberChange(thrownNumber: string) {
-      if (this.inRound) {
-        const currentPlayer = this.gameData[this.currentPlayerCount];
-        const darts = ['firstDart', 'secondDart', 'thirdDart'];
-        const emptyDartIndex = darts.findIndex(dart => currentPlayer[dart] === '-');
-        
-        if (emptyDartIndex !== -1) {
-          this.updatePlayerScore(thrownNumber);
-          currentPlayer[darts[emptyDartIndex]] = thrownNumber;
-        }
-  
-        if (emptyDartIndex === 2) {
-          this.inRound = false;
-        }
+    if (this.inRound) {
+      const currentPlayer = this.gameData[this.currentPlayerCount];
+      const darts = ['firstDart', 'secondDart', 'thirdDart'];
+      const emptyDartIndex = darts.findIndex(
+        (dart) => currentPlayer[dart] === '-'
+      );
+
+      if (emptyDartIndex !== -1) {
+        this.updatePlayerScore(thrownNumber);
+        currentPlayer[darts[emptyDartIndex]] = thrownNumber;
       }
-      this.lastThrownNumber = thrownNumber;
+
+      if (emptyDartIndex === 2) {
+        this.inRound = false;
+      }
+    }
+    this.lastThrownNumber = thrownNumber;
+  }
+
+  updatePlayerScore(thrownNumber: string) {
+    const currentPlayer = this.gameData[this.currentPlayerCount];
+    const multiplier = thrownNumber.charAt(0);
+    const number =
+      multiplier === 'T' || multiplier === 'D'
+        ? thrownNumber.slice(1)
+        : thrownNumber;
+    const score = parseInt(number);
+
+    if (currentPlayer.score === 1) {
+      currentPlayer.trysForOne += 1;
     }
 
-    updatePlayerScore(thrownNumber: string) {
-      const currentPlayer = this.gameData[this.currentPlayerCount];
-      const multiplier = thrownNumber.charAt(0);
-      const number = (multiplier === 'T' || multiplier === 'D') ? thrownNumber.slice(1) : thrownNumber;
-      const score = parseInt(number);
+    if (currentPlayer.score === 2) {
+      currentPlayer.trysForTwo += 1;
+    }
+
+    if (currentPlayer.score === 3) {
+      currentPlayer.trysForThree += 1;
+    }
+
+    if (currentPlayer.score === 4) {
+      currentPlayer.trysForFour += 1;
+    }
+
+    if (currentPlayer.score === 5) {
+      currentPlayer.trysForFive += 1;
+    }
+
+    if (currentPlayer.score === 6) {
+      currentPlayer.trysForSix += 1;
+    }
+
+    if (currentPlayer.score === 7) {
+      currentPlayer.trysForSeven += 1;
+    }
+
+    if (currentPlayer.score === 8) {
+      currentPlayer.trysForEight += 1;
+    }
+
+    if (currentPlayer.score === 9) {
+      currentPlayer.trysForNine += 1;
+    }
+    if (currentPlayer.score === 10) {
+      currentPlayer.trysForTen += 1;
+    }
+
+    if (currentPlayer.score === 11) {
+      currentPlayer.trysForEleven += 1;
+    }
+
+    if (currentPlayer.score === 12) {
+      currentPlayer.trysForTwelve += 1;
+    }
+
+    if (currentPlayer.score === 13) {
+      currentPlayer.trysForThirteen += 1;
+    }
+
+    if (currentPlayer.score === 14) {
+      currentPlayer.trysForFourteen += 1;
+    }
+
+    if (currentPlayer.score === 15) {
+      currentPlayer.trysForFifteen += 1;
+    }
+
+    if (currentPlayer.score === 16) {
+      currentPlayer.trysForSixteen += 1;
+    }
+
+    if (currentPlayer.score === 17) {
+      currentPlayer.trysForSeventeen += 1;
+    }
+
+    if (currentPlayer.score === 18) {
+      currentPlayer.trysForEighteen += 1;
+    }
+
+    if (currentPlayer.score === 19) {
+      currentPlayer.trysForNineteen += 1;
+    }
+
+    if (currentPlayer.score === 20) {
+      currentPlayer.trysForTwenty += 1;
+    }
+
+    if (currentPlayer.score === score && currentPlayer.score !== 20) {
+      currentPlayer.score += 1;
+    }
+
+    if (currentPlayer.score === 20 && score === 20) {
+      this.isWinner = true;
+      this.inRound = false;
+    }
+    localStorage.setItem('gameData', JSON.stringify(this.gameData));
+  }
+
+  nextPlayer() {
+    const currentPlayer = this.gameData[this.currentPlayerCount];
+
+    if (this.isWinner) {
+      this.winnerModalOpen = true;
+    } else {
+      currentPlayer.roundAverage = parseFloat(
+        (currentPlayer.roundTotal / currentPlayer.round).toFixed(2)
+      );
+      currentPlayer.firstDart = '-';
+      currentPlayer.secondDart = '-';
+      currentPlayer.thirdDart = '-';
+      currentPlayer.round += 1;
+
+      this.currentPlayerCount =
+        this.playerCount > this.currentPlayerCount
+          ? this.currentPlayerCount + 1
+          : 0;
+    }
+    if (this.speakToTextEnabled) {
+      this.speakText();
+    }
+    this.inRound = true;
+    localStorage.setItem('gameData', JSON.stringify(this.gameData));
+  }
+
+  nextRound() {
+    if (this.gameData && this.gameData.length > 0) {
+      const lastPlayer = this.gameData.shift();
+
+      if (lastPlayer) {
+        this.gameData.push(lastPlayer);
+      }
+
+      this.gameData.forEach((player) => {
+        if (player) {
+          player.roundTotal = 0;
+          player.firstDart = '-';
+          player.secondDart = '-';
+          player.thirdDart = '-';
+          player.round = 1;
+          player.roundAverage = 0;
+          player.score = 1;
+          (player.trysForOne = 0),
+            (player.trysForTwo = 0),
+            (player.trysForThree = 0),
+            (player.trysForFour = 0),
+            (player.trysForFive = 0),
+            (player.trysForSix = 0),
+            (player.trysForSeven = 0),
+            (player.trysForEight = 0),
+            (player.trysForNine = 0),
+            (player.trysForTen = 0),
+            (player.trysForEleven = 0),
+            (player.trysForTwelve = 0),
+            (player.trysForThirteen = 0),
+            (player.trysForFourteen = 0),
+            (player.trysForFifteen = 0),
+            (player.trysForSixteen = 0),
+            (player.trysForSeventeen = 0),
+            (player.trysForEighteen = 0),
+            (player.trysForNineteen = 0),
+            (player.trysForTwenty = 0);
+        }
+      });
+
+      if (this.gameData[0]) {
+        this.gameData[0].game++;
+      }
+
+      this.playerCount = this.gameData.length - 1;
+    }
+    this.legEnd = false;
+    localStorage.setItem('gameData', JSON.stringify(this.gameData));
+
+    if (this.speakToTextEnabled) {
+      this.speakText();
+    }
+  }
+
+  deleteLastDart() {
+    const currentPlayer = this.gameData[this.currentPlayerCount];
+    const darts = ['thirdDart', 'secondDart', 'firstDart'];
+    const filledDartIndex = darts.findIndex(
+      (dart) =>
+        typeof currentPlayer[dart] === 'string' && currentPlayer[dart] !== '-'
+    );
+
+    if (filledDartIndex !== -1) {
+      const score = currentPlayer[darts[filledDartIndex]] as string;
+      const multiplier = score.charAt(0);
+      const number =
+        multiplier === 'T' || multiplier === 'D' ? score.slice(1) : score;
+      const multiplierFactor =
+        multiplier === 'T' ? 3 : multiplier === 'D' ? 2 : 1;
+
+      if (
+        currentPlayer.score === parseInt(number) + 1 &&
+        parseInt(number) + 1 !== 1
+      ) {
+        currentPlayer.score -= 1;
+      }
 
       if (currentPlayer.score === 1) {
-        currentPlayer.trysForOne += 1;
+        currentPlayer.trysForOne -= 1;
       }
 
       if (currentPlayer.score === 2) {
-        currentPlayer.trysForTwo += 1;
+        currentPlayer.trysForTwo -= 1;
       }
 
       if (currentPlayer.score === 3) {
-        currentPlayer.trysForThree += 1;
+        currentPlayer.trysForThree -= 1;
       }
 
       if (currentPlayer.score === 4) {
-        currentPlayer.trysForFour += 1;
+        currentPlayer.trysForFour -= 1;
       }
 
       if (currentPlayer.score === 5) {
-        currentPlayer.trysForFive += 1;
+        currentPlayer.trysForFive -= 1;
       }
 
       if (currentPlayer.score === 6) {
-        currentPlayer.trysForSix += 1;
+        currentPlayer.trysForSix -= 1;
       }
 
       if (currentPlayer.score === 7) {
-        currentPlayer.trysForSeven += 1;
+        currentPlayer.trysForSeven -= 1;
       }
 
       if (currentPlayer.score === 8) {
-        currentPlayer.trysForEight += 1;
+        currentPlayer.trysForEight -= 1;
       }
 
       if (currentPlayer.score === 9) {
-        currentPlayer.trysForNine += 1;
+        currentPlayer.trysForNine -= 1;
       }
       if (currentPlayer.score === 10) {
-        currentPlayer.trysForTen += 1;
+        currentPlayer.trysForTen -= 1;
       }
 
       if (currentPlayer.score === 11) {
-        currentPlayer.trysForEleven += 1;
+        currentPlayer.trysForEleven -= 1;
       }
 
       if (currentPlayer.score === 12) {
-        currentPlayer.trysForTwelve += 1;
+        currentPlayer.trysForTwelve -= 1;
       }
 
       if (currentPlayer.score === 13) {
-        currentPlayer.trysForThirteen += 1;
+        currentPlayer.trysForThirteen -= 1;
       }
 
       if (currentPlayer.score === 14) {
-        currentPlayer.trysForFourteen += 1;
+        currentPlayer.trysForFourteen -= 1;
       }
 
       if (currentPlayer.score === 15) {
-        currentPlayer.trysForFifteen += 1;
+        currentPlayer.trysForFifteen -= 1;
       }
 
       if (currentPlayer.score === 16) {
-        currentPlayer.trysForSixteen += 1;
+        currentPlayer.trysForSixteen -= 1;
       }
 
       if (currentPlayer.score === 17) {
-        currentPlayer.trysForSeventeen += 1;
+        currentPlayer.trysForSeventeen -= 1;
       }
 
       if (currentPlayer.score === 18) {
-        currentPlayer.trysForEighteen += 1;
+        currentPlayer.trysForEighteen -= 1;
       }
 
       if (currentPlayer.score === 19) {
-        currentPlayer.trysForNineteen += 1;
+        currentPlayer.trysForNineteen -= 1;
       }
 
       if (currentPlayer.score === 20) {
-        currentPlayer.trysForTwenty += 1;
+        currentPlayer.trysForTwenty -= 1;
       }
-
-      if (currentPlayer.score === score && currentPlayer.score !== 20) {
-        currentPlayer.score += 1;
-      }
-
-      if (currentPlayer.score === 20 && score === 20) {
-        this.isWinner = true;
-        this.inRound = false;
-      }
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
+      currentPlayer[darts[filledDartIndex]] = '-';
     }
-
-    nextPlayer() {
-      const currentPlayer = this.gameData[this.currentPlayerCount];
-
-      if (this.isWinner) {
-        this.winnerModalOpen = true;
-      } else {
-        currentPlayer.roundAverage = parseFloat((currentPlayer.roundTotal / currentPlayer.round).toFixed(2));
-        currentPlayer.firstDart = '-';
-        currentPlayer.secondDart = '-';
-        currentPlayer.thirdDart = '-';
-        currentPlayer.round += 1;
-
-        this.currentPlayerCount = (this.playerCount > this.currentPlayerCount) ? this.currentPlayerCount + 1 : 0;
-      }
-      if (this.speakToTextEnabled) {
-        this.speakText();
-      }
-      this.inRound = true;
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
-    }
-
-    nextRound() {
-      if (this.gameData && this.gameData.length > 0) {
-        const lastPlayer = this.gameData.shift();
-  
-        if (lastPlayer) {
-          this.gameData.push(lastPlayer);
-        }
-  
-        this.gameData.forEach(player => {
-          if (player) {
-            player.roundTotal = 0;
-            player.firstDart = '-';
-            player.secondDart = '-';
-            player.thirdDart = '-';
-            player.round = 1;
-            player.roundAverage = 0;
-            player.score = 1;
-            player.trysForOne = 0,
-            player.trysForTwo = 0,
-            player.trysForThree = 0,
-            player.trysForFour = 0,
-            player.trysForFive = 0,
-            player.trysForSix = 0,
-            player.trysForSeven = 0,
-            player.trysForEight = 0,
-            player.trysForNine = 0,
-            player.trysForTen = 0,
-            player.trysForEleven = 0,
-            player.trysForTwelve = 0,
-            player.trysForThirteen = 0,
-            player.trysForFourteen = 0,
-            player.trysForFifteen = 0,
-            player.trysForSixteen = 0,
-            player.trysForSeventeen = 0,
-            player.trysForEighteen = 0,
-            player.trysForNineteen = 0,
-            player.trysForTwenty = 0
-          }
-        });
-  
-        if (this.gameData[0]) {
-          this.gameData[0].game++;
-        }
-  
-        this.playerCount = this.gameData.length - 1;
-      }
-      this.legEnd = false;
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
-
-      if (this.speakToTextEnabled) {
-        this.speakText();
-      }
-    }
-
-    deleteLastDart() {
-      const currentPlayer = this.gameData[this.currentPlayerCount];
-      const darts = ['thirdDart', 'secondDart', 'firstDart'];
-      const filledDartIndex = darts.findIndex(dart => typeof currentPlayer[dart] === 'string' && currentPlayer[dart] !== '-');
-  
-      if (filledDartIndex !== -1) {
-          const score = currentPlayer[darts[filledDartIndex]] as string;
-          const multiplier = score.charAt(0);
-          const number = (multiplier === 'T' || multiplier === 'D') ? score.slice(1) : score;
-          const multiplierFactor = (multiplier === 'T') ? 3 : (multiplier === 'D') ? 2 : 1;
-  
-          if (currentPlayer.score === parseInt(number) + 1 && parseInt(number) + 1 !== 1) {
-            currentPlayer.score -= 1;
-          }
-
-          if (currentPlayer.score === 1) {
-            currentPlayer.trysForOne -= 1;
-          }
-  
-          if (currentPlayer.score === 2) {
-            currentPlayer.trysForTwo -= 1;
-          }
-  
-          if (currentPlayer.score === 3) {
-            currentPlayer.trysForThree -= 1;
-          }
-  
-          if (currentPlayer.score === 4) {
-            currentPlayer.trysForFour -= 1;
-          }
-  
-          if (currentPlayer.score === 5) {
-            currentPlayer.trysForFive -= 1;
-          }
-  
-          if (currentPlayer.score === 6) {
-            currentPlayer.trysForSix -= 1;
-          }
-  
-          if (currentPlayer.score === 7) {
-            currentPlayer.trysForSeven -= 1;
-          }
-  
-          if (currentPlayer.score === 8) {
-            currentPlayer.trysForEight -= 1;
-          }
-  
-          if (currentPlayer.score === 9) {
-            currentPlayer.trysForNine -= 1;
-          }
-          if (currentPlayer.score === 10) {
-            currentPlayer.trysForTen -= 1;
-          }
-  
-          if (currentPlayer.score === 11) {
-            currentPlayer.trysForEleven -= 1;
-          }
-  
-          if (currentPlayer.score === 12) {
-            currentPlayer.trysForTwelve -= 1;
-          }
-  
-          if (currentPlayer.score === 13) {
-            currentPlayer.trysForThirteen -= 1;
-          }
-  
-          if (currentPlayer.score === 14) {
-            currentPlayer.trysForFourteen -= 1;
-          }
-  
-          if (currentPlayer.score === 15) {
-            currentPlayer.trysForFifteen -= 1;
-          }
-  
-          if (currentPlayer.score === 16) {
-            currentPlayer.trysForSixteen -= 1;
-          }
-  
-          if (currentPlayer.score === 17) {
-            currentPlayer.trysForSeventeen -= 1;
-          }
-  
-          if (currentPlayer.score === 18) {
-            currentPlayer.trysForEighteen -= 1;
-          }
-  
-          if (currentPlayer.score === 19) {
-            currentPlayer.trysForNineteen -= 1;
-          }
-  
-          if (currentPlayer.score === 20) {
-            currentPlayer.trysForTwenty -= 1;
-          }
-          currentPlayer[darts[filledDartIndex]] = '-';
-      }
-      this.isWinner = false;
-      this.inRound = true;
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
+    this.isWinner = false;
+    this.inRound = true;
+    localStorage.setItem('gameData', JSON.stringify(this.gameData));
   }
 
   closeWinnerModal() {
@@ -384,11 +402,11 @@ export class DartGameAroundTheClockComponent implements OnInit {
   }
 
   updateDartValue(dartType: string) {
-  // add updateDartValue later!
+    // add updateDartValue later!
   }
 
   checkIfOneActivePlayer() {
-    this.isOneActivePlayer = this.gameData.some(player => player.isActive);
+    this.isOneActivePlayer = this.gameData.some((player) => player.isActive);
   }
 
   speakText(): void {
@@ -397,7 +415,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
     let textToSpeak = `Aktueller Spieler: ${currentPlayer.player} Aktueller Wert: ${currentPlayer.score}`;
 
     if (this.isWinner) {
-      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`
+      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`;
     }
 
     this.textToSpeechService.speak(textToSpeak);
@@ -405,6 +423,9 @@ export class DartGameAroundTheClockComponent implements OnInit {
 
   toggleSpeakToTextEnabled(): void {
     this.speakToTextEnabled = !this.speakToTextEnabled;
-    localStorage.setItem('speakToTextEnabled', JSON.stringify(this.speakToTextEnabled));
+    localStorage.setItem(
+      'speakToTextEnabled',
+      JSON.stringify(this.speakToTextEnabled)
+    );
   }
 }
