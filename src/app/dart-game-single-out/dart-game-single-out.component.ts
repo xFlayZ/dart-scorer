@@ -79,7 +79,7 @@ export class DartGameSingleOutComponent implements OnInit {
     const shuffledPlayers = shuffleArray(this.players);
 
     this.gameData = shuffledPlayers.map((player) => ({
-      player: player.name,
+      playerName: player.playerName,
       score: scoreValueNum,
       wins: 0,
       roundAverage: 0,
@@ -354,10 +354,10 @@ export class DartGameSingleOutComponent implements OnInit {
       possibleCheckoutText = `Möglicher Checkout: ${this.possibleCheckout}`;
     }
 
-    let textToSpeak = `${currentPlayer.player} | Verbleibender Score: ${currentPlayer.score} | ${possibleCheckoutText}`;
+    let textToSpeak = `${currentPlayer.playerName} | Verbleibender Score: ${currentPlayer.score} | ${possibleCheckoutText}`;
 
     if (currentPlayer.score == 0) {
-      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`;
+      textToSpeak = `${currentPlayer.playerName} hat die Runde Gewonnen!`;
     }
 
     this.textToSpeechService.speak(textToSpeak);
@@ -483,7 +483,7 @@ export class DartGameSingleOutComponent implements OnInit {
     if (!this.isOneActivePlayer && !this.legEnd) {
       // add confirm modal
       this.legEnd = true;
-    } else if (currentPlayer.player == player.player) {
+    } else if (currentPlayer.playerName == player.player) {
       // add confirm modal
       if (!this.legEnd) {
         this.nextPlayer();

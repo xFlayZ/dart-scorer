@@ -44,7 +44,7 @@
     <p class="text-lg font-semibold underline mt-4">Teilnehmer:</p>
     <ul class="mt-3">
       <li *ngFor="let player of players" class="flex items-center">
-        {{ player.name }}
+        {{ player.playerName }}
         <span class="delete-player ml-2 cursor-pointer">
           <app-choose-song-modal #songModal></app-choose-song-modal>
 

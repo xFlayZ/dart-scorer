@@ -7,7 +7,7 @@
         <div
           class="col-start-1 col-span-3 font-bold text-5xl text-center flex items-center"
         >
-          <span>{{ gameData[currentPlayerCount].player }}</span>
+          <span>{{ gameData[currentPlayerCount].playerName }}</span>
           <i
             *ngIf="
               currentPlayerCount !== previousPlayerCount &&
@@ -119,7 +119,7 @@
       <tbody class="text-gray-700">
         <!-- Sortiere Spieler nach gewonnenen Runden -->
         <tr *ngFor="let player of sortedGameData" class="border-b">
-          <td class="px-4 py-2 text-left">{{ player.player }}</td>
+          <td class="px-4 py-2 text-left">{{ player.playerName }}</td>
           <td class="px-4 py-2 text-left">{{ player.wins }}</td>
           <td class="px-4 py-2 text-left">{{ player.score }}</td>
           <td class="px-4 py-2 text-left">{{ player.round }}</td>
@@ -148,6 +148,6 @@
 <!-- modal area -->
 <app-dart-winner-modal
   [isOpen]="winnerModalOpen"
-  [winner]="gameData[currentPlayerCount].player"
+  [winner]="gameData[currentPlayerCount].playerName"
   (closeModalEvent)="closeWinnerModal()"
 ></app-dart-winner-modal>

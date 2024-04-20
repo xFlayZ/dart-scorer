@@ -38,7 +38,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
     const shuffledPlayers = shuffleArray(this.players);
 
     this.gameData = shuffledPlayers.map((player) => ({
-      player: player.name,
+      playerName: player.playerName,
       score: 1,
       wins: 0,
       roundAverage: 0,
@@ -412,10 +412,10 @@ export class DartGameAroundTheClockComponent implements OnInit {
   speakText(): void {
     const currentPlayer = this.gameData[this.currentPlayerCount];
 
-    let textToSpeak = `Aktueller Spieler: ${currentPlayer.player} Aktueller Wert: ${currentPlayer.score}`;
+    let textToSpeak = `Aktueller Spieler: ${currentPlayer.playerName} Aktueller Wert: ${currentPlayer.score}`;
 
     if (this.isWinner) {
-      textToSpeak = `${currentPlayer.player} hat die Runde Gewonnen!`;
+      textToSpeak = `${currentPlayer.playerName} hat die Runde Gewonnen!`;
     }
 
     this.textToSpeechService.speak(textToSpeak);

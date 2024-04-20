@@ -1,5 +1,5 @@
 export interface GameDataAroundTheClock {
-  player: string;
+  playerName: string;
   score: number;
   wins: number;
   roundAverage: number;
