@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, NgZone, OnInit } from '@angular/core';
 import { CheckoutService } from '../services/checkout/checkout.service';
 import { GameData } from '../interfaces/game-data.interface';
-import { shuffleArray } from '../helpers';
 import { TextToSpeechService } from '../services/text-to-speech/text-to-speech.service';
 import { SoundService } from '../services/sound/sound.service';
 import confetti from 'canvas-confetti';
 import { VoiceToTextService } from '../services/voice-to-text/voice-to-text.service';
 import { GameSettingsService } from '../services/game-settings/game-settings.service';
+import { GameService } from '../services/game-service/game.service';
 
 @Component({
   selector: 'app-dart-game-single-out',
@@ -35,12 +35,14 @@ export class DartGameSingleOutComponent implements OnInit {
     private soundService: SoundService,
     private voiceToTextService: VoiceToTextService,
     private ngZone: NgZone,
-    private gameSettingsService: GameSettingsService
+    private gameSettingsService: GameSettingsService,
+    private gameService: GameService
   ) {}
 
   ngOnInit(): void {
     this.gameSettingsService.loadSettings();
-    this.setupGame();
+    this.gameService.setupGame();
+    this.gameData = this.gameService.gameData;
   }
 
   onThrownNumberChange(thrownNumber: string) {
@@ -65,44 +67,6 @@ export class DartGameSingleOutComponent implements OnInit {
       }
     }
     this.lastThrownNumber = thrownNumber;
-  }
-
-  setupGame() {
-    const savedData = localStorage.getItem('gameStartedData');
-    if (savedData) {
-      const { players, scoreValue } = JSON.parse(savedData);
-      this.players = players;
-      this.scoreValue = scoreValue;
-    }
-
-    const scoreValueNum = parseInt(this.scoreValue, 10);
-    const shuffledPlayers = shuffleArray(this.players);
-
-    this.gameData = shuffledPlayers.map((player) => ({
-      playerName: player.playerName,
-      score: scoreValueNum,
-      wins: 0,
-      roundAverage: 0,
-      totalAverage: 0,
-      highestRound: 0,
-      firstDart: '-',
-      secondDart: '-',
-      thirdDart: '-',
-      roundTotal: 0,
-      round: 1,
-      game: 0,
-      isActive: true,
-      winnerSong: player.winnerSong,
-    }));
-
-    this.playerCount = this.players.length - 1;
-    localStorage.setItem('gameData', JSON.stringify(this.gameData));
-
-    if (this.gameSettingsService.gameSettings.speakToTextEnabled) {
-      this.speakText();
-    }
-
-    this.voiceToScore();
   }
 
   nextRound() {
@@ -413,7 +377,7 @@ export class DartGameSingleOutComponent implements OnInit {
   }
 
   resetGame(): void {
-    this.setupGame();
+    this.gameService.setupGame();
   }
 
   togglePlayerStatuss(player: any): void {
