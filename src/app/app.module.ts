@@ -18,6 +18,7 @@ import { SoundService } from './services/sound.service';
 import { ChooseSongModalComponent } from './shared/modals/choose-song-modal/choose-song-modal.component';
 import { VoiceToTextService } from './services/voice-to-text.service';
 import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal-confirm-action.component';
+import { TopBarControlsComponent } from './shared/top-bar-controls/top-bar-controls.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal
     DartGameAroundTheClockComponent,
     DartGameDoubleOutComponent,
     ChooseSongModalComponent,
-    ModalConfirmActionComponent
+    ModalConfirmActionComponent,
+    TopBarControlsComponent
   ],
   imports: [
     BrowserModule,

@@ -29,9 +29,7 @@ export class DartGameSingleOutComponent implements OnInit {
   public playSoundEnabled = true;
   public animationEnabled = true;
   public voiceToTextEnabled = false;
-  public isSettingsModalOpen = false;
 
-  closeModalEvent = new EventEmitter<void>();
   @Input() players: string[] = [];
   @Input() scoreValue = '';
 
@@ -337,33 +335,6 @@ export class DartGameSingleOutComponent implements OnInit {
     this.textToSpeechService.speak(textToSpeak);
   }
 
-  toggleSpeakToTextEnabled(): void {
-    this.speakToTextEnabled = !this.speakToTextEnabled;
-    localStorage.setItem('speakToTextEnabled', String(this.speakToTextEnabled));
-  }
-
-  
-  togglePlaySoundEnabled(): void {
-    this.playSoundEnabled = !this.playSoundEnabled;
-    localStorage.setItem('playSoundEnabled', String(this.playSoundEnabled));
-  }
-  
-
-  toggleAnimationEnabled(): void {
-    this.animationEnabled = !this.animationEnabled;
-    localStorage.setItem('animationEnabled', String(this.animationEnabled));
-  }
-
-  toggleVoiceToTextEnabled(): void {
-    this.voiceToTextEnabled = !this.voiceToTextEnabled;
-    if (this.voiceToTextEnabled) {
-      this.voiceToScore();
-    } else {
-      this.stopScoreToVoice();
-    }
-    localStorage.setItem('voiceToTextEnabled', String(this.voiceToTextEnabled));
-  }
-
   playSound(path: string, sound: string): void {
     this.ngZone.run(() => {
     if (this.playSoundEnabled) {
@@ -396,15 +367,6 @@ export class DartGameSingleOutComponent implements OnInit {
       }
     }  
   });
-  }
-
-  openSettingsModal() {
-    this.isSettingsModalOpen = true;
-  }
-
-  closeModal() {
-    this.closeModalEvent.emit();
-    this.isSettingsModalOpen = false;
   }
 
   celebrate(particleCount: number) {
