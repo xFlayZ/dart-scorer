@@ -1,14 +1,8 @@
 <app-top-bar-controls></app-top-bar-controls>
 <div class="grid grid-cols-2 gap-4 mt-3 ml-3">
   <div>
-    <app-game-player-card
-      [gameData]="gameData"
-      [legEnd]="legEnd"
-    ></app-game-player-card>
-    <app-game-controls
-      [gameData]="gameData"
-      [scoreValue]="scoreValue"
-    ></app-game-controls>
+    <app-game-player-card [gameData]="gameData"></app-game-player-card>
+    <app-game-controls [gameData]="gameData"></app-game-controls>
   </div>
   <div>
     <app-dart-board

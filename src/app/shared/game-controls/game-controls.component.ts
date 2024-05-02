@@ -1,4 +1,4 @@
-import { Component, Input, NgZone } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { GameData } from '../../interfaces/game-data.interface';
 import { GameSettingsService } from '../../services/game-settings/game-settings.service';
 import { GameService } from '../../services/game-service/game.service';
@@ -11,7 +11,7 @@ import { CheckoutService } from '../../services/checkout/checkout.service';
   templateUrl: './game-controls.component.html',
   styleUrl: './game-controls.component.scss',
 })
-export class GameControlsComponent {
+export class GameControlsComponent implements OnInit {
   public currentPlayerCount = 0;
   public previousPlayerCount = 0;
   public playerCount = 0;
@@ -35,6 +35,10 @@ export class GameControlsComponent {
     private soundService: SoundService,
     private checkoutService: CheckoutService
   ) {}
+
+  ngOnInit(): void {
+    this.watchForLegEndChanges();
+  }
 
   nextPlayer() {
     this.gameService.nextPlayer();
@@ -81,7 +85,17 @@ export class GameControlsComponent {
     const currentPlayer = this.gameData[this.currentPlayerCount];
     currentPlayer.wins += 1;
     this.isLegEnd = true;
+    this.gameService.legEnd = true;
+    this.gameService.winnerModalOpen = false;
     this.winnerModalOpen = false;
     localStorage.setItem('gameData', JSON.stringify(this.gameData));
+  }
+
+  watchForLegEndChanges() {
+    setInterval(() => {
+      if (this.isLegEnd !== this.gameService.legEnd) {
+        this.isLegEnd = this.gameService.legEnd;
+      }
+    }, 250);
   }
 }
