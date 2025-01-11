@@ -1,67 +1,30 @@
-<div
-  *ngIf="isOpen"
-  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-50"
->
-  <div class="relative mx-auto max-w-xl">
-    <div class="bg-white rounded-lg shadow-lg p-6">
+<div *ngIf="isOpen" class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
+  <div class="relative mx-auto" style="width: 35%;">
+    <div class="bg-gray-700 rounded-lg shadow-md p-6">
       <div class="modal-content">
-        <div class="modal-header flex justify-between border-b pb-4">
-          <h3 class="modal-title text-lg font-semibold">
+        <div class="modal-header flex justify-between items-center border-b border-gray-600 pb-4">
+          <h3 class="modal-title text-xl font-semibold text-green-500">
             Wähle einen Song aus
           </h3>
-          <button
-            class="modal-close text-gray-600 hover:text-gray-800 ml-16"
-            (click)="closeModal()"
-          >
-            <svg
-              class="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
+          <button class="modal-close p-2" (click)="closeModal()">
+            <svg class="h-6 w-6 text-gray-300 hover:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
-        <ul class="mt-4">
+        <ul class="mt-4 space-y-2">
           <ng-container *ngFor="let song of displayedSongs">
-            <li
-              *ngIf="song"
-              class="flex items-center justify-between cursor-pointer mt-4"
-              (click)="selectSong(song.value)"
-              [ngClass]="{ 'hover:text-blue-700': isHovered }"
-              (mouseenter)="isHovered = true"
-              (mouseleave)="isHovered = false"
-            >
-              <span>{{ song.name }}</span>
-              <i
-                class="fa-solid fa-play text-green-800"
-                (click)="playSound($event, song.value)"
-              ></i>
+            <li *ngIf="song" class="flex items-center justify-between cursor-pointer py-2 rounded-md bg-gray-800 hover:bg-gray-900" (click)="selectSong(song.value)">
+              <span class="text-white ml-2">{{ song.name }}</span>
+              <i class="fa-solid fa-play text-green-500 hover:text-green-600 mr-4" (click)="playSound($event, song.value)"></i>
             </li>
           </ng-container>
         </ul>
         <div class="mt-4 flex justify-end">
-          <button
-            *ngIf="currentPage > 1"
-            class="text-blue-600 hover:text-blue-800 mr-2"
-            [disabled]="currentPage === 1"
-            (click)="goToPage(currentPage - 1)"
-          >
+          <button *ngIf="currentPage > 1" class="text-green-500 hover:text-green-600 mr-2" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
             Zurück
           </button>
-          <button
-            *ngIf="totalPages > currentPage"
-            class="text-blue-600 hover:text-blue-800"
-            [disabled]="currentPage === totalPages"
-            (click)="goToPage(currentPage + 1)"
-          >
+          <button *ngIf="totalPages > currentPage" class="text-green-500 hover:text-green-600" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
             Weiter
           </button>
         </div>
