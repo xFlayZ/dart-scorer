@@ -19,6 +19,7 @@ import { VoiceToTextService } from './services/voice-to-text.service';
 import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal-confirm-action.component';
 import { ChooseSongModalComponent } from './shared/choose-song-modal/choose-song-modal.component';
 import { GameSettingsComponent } from './shared/game-settings/game-settings.component';
+import { DartGameLuckyNumbersComponent } from './dart-game-lucky-numbers/dart-game-lucky-numbers.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { GameSettingsComponent } from './shared/game-settings/game-settings.comp
     ChooseSongModalComponent,
     DartGameDoubleOutComponent,
     ModalConfirmActionComponent,
-    GameSettingsComponent
+    GameSettingsComponent,
+    DartGameLuckyNumbersComponent
   ],
   imports: [
     BrowserModule,

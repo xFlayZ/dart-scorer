@@ -17,7 +17,7 @@ export class DartPresetComponent implements OnInit {
     { value: 'singleOut', label: 'Single Out', backgroundImage: 'assets/images/single_out.webp' },
     { value: 'doubleOut', label: 'Double Out', backgroundImage: 'assets/images/double_out.webp' },
     { value: 'aroundTheClock', label: 'Around the Clock', backgroundImage: 'assets/images/around_the_clock.webp' },
-    //{ value: 'luckyNumber', label: 'Lucky Number', backgroundImage: 'assets/images/lucky_number.webp' },
+    { value: 'luckyNumber', label: 'Lucky Number', backgroundImage: 'assets/images/lucky_number.webp' },
   ];
 
   scores = [
@@ -32,7 +32,7 @@ export class DartPresetComponent implements OnInit {
   ];
 
   needScore = ['singleOut', 'doubleOut'];
-  needDifficulty = ['aroundTheClock'];
+  needDifficulty = ['aroundTheClock', 'luckyNumber'];
 
   selectedGameMode = 'singleOut';
   selectedScore = '301';

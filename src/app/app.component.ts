@@ -33,8 +33,11 @@ export class AppComponent {
       case "aroundTheClock":
         path = "Around the Clock";
         break;
+      case "luckyNumber":
+        path = "Lucky Number";
+        break;
     }
-    const title = `Dart Scorer - ${path}`;
+    const title = `PeiDu Scorer - ${path}`;
     document.title = title;
   }
 }

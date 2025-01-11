@@ -1,0 +1,115 @@
+<!-- back button -->
+<a href="/" class="fixed top-0 left-0 m-4 p-4 bg-white rounded-full shadow-md">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-black"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M10 19l-7-7m0 0l7-7m-7 7h18"
+    />
+  </svg>
+</a>
+<!-- back button end -->
+
+<div class="grid grid-cols-2 gap-4 mt-3">
+  <div>
+    <!-- player-card -->
+    <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20">
+      <div class="grid grid-cols-12">
+        <!-- Spielername -->
+        <div class="col-start-1 col-span-3 text-center">
+          <p class="text-xs font-medium uppercase">Spielername</p>
+          <div class="font-bold text-5xl flex itemas-center justify-center">
+            {{ gameData[currentPlayerCount].player }}
+          </div>
+        </div>
+        <!-- Getroffene Zahlen -->
+        <div class="col-start-6 col-span-1 text-center">
+          <p class="text-xs font-medium uppercase">Getroffen</p>
+          <div class="font-bold text-5xl">
+            {{ gameData[currentPlayerCount].thrownNumbers }}
+          </div>
+        </div>
+        <!-- Runde -->
+        <div class="col-start-12 col-span-1 text-center">
+          <p class="text-xs font-medium uppercase">Versuch</p>
+          <div class="text-5xl bg-yellow-500">
+            {{ gameData[currentPlayerCount].trys }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- player-card-end -->
+    <!-- game control buttons -->
+    <div
+      class="bg-gray-800 text-white rounded-lg shadow-lg p-6 flex justify-center mt-2"
+    >
+        <button
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
+          (click)="nextNumber()"
+        >
+        <i class="fa-solid fa-check mr-2"></i>Getroffen
+        </button>
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          (click)="nextPlayer()"
+        >
+        <i class="fa-solid fa-x mr-2"></i>Nicht getroffen
+        </button>
+    </div>
+
+    <!-- game control buttons end -->
+  </div>
+  <div>
+ <!-- random-number -->
+ <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20 h-52 flex justify-center items-center">
+    <div class="bg-gray-700 p-8 shadow flex flex-col items-center">
+      <p class="text-white font-semibold uppercase text-sm tracking-wider">Lucky Number</p>
+      <p class="text-white font-bold text-6xl">{{ randomNumber }}</p>
+    </div>
+  </div>
+  <!-- random-number-end -->
+  </div>
+</div>
+
+<!-- gameData Table -->
+<div class="mt-8">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm bg-gray-700 rounded-lg">
+      <thead class="text-xs text-white uppercase bg-gray-800">
+        <tr>
+          <th class="px-4 py-2">Spieler</th>
+          <th class="px-4 py-2">Getroffene Zahlen</th>
+          <th class="px-4 py-2">Aktiv?</th>
+        </tr>
+      </thead>
+      <tbody class="text-white">
+        <!-- Sortiere Spieler nach gewonnenen Runden -->
+        <tr *ngFor="let player of sortedGameData">
+          <td class="px-4 py-2 text-center">{{ player.player }}</td>
+          <td class="px-4 py-2 text-center">{{ player.thrownNumbers }}</td>
+          <td class="px-4 py-2 text-center">
+            <div class="player-status">
+              <i
+                *ngIf="player.isActive"
+                class="fa-solid fa-check text-green-500 cursor-pointer"
+                (click)="togglePlayerStatus(player)"
+              ></i>
+              <i
+                *ngIf="!player.isActive"
+                class="fa-solid fa-ban text-red-500 cursor-pointer"
+                (click)="togglePlayerStatus(player)"
+              ></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

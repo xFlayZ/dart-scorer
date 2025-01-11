@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
 import { shuffleArray } from '../helpers';
 import { GameDataAroundTheClock } from '../interfaces/game-data-around-the-clock';
 import { TextToSpeechService } from '../services/text-to-speech.service';
@@ -12,6 +12,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
   public gameData: GameDataAroundTheClock[] = [];
   public playerCount = 0;
   public currentPlayerCount = 0;
+  public previousPlayerCount = 0;
   public lastThrownNumber = "-";
   public winnerModalOpen = false;
   public inRound = true;
@@ -205,14 +206,24 @@ export class DartGameAroundTheClockComponent implements OnInit {
         currentPlayer.firstDart = '-';
         currentPlayer.secondDart = '-';
         currentPlayer.thirdDart = '-';
-        currentPlayer.round += 1;
 
+        if (currentPlayer.isActive) {
+          currentPlayer.round += 1;
+          this.previousPlayerCount = this.currentPlayerCount
+        }
+        
         this.currentPlayerCount = (this.playerCount > this.currentPlayerCount) ? this.currentPlayerCount + 1 : 0;
+        
+        if (!currentPlayer.isActive) {
+          this.nextPlayer()
+        }
+
       }
       if (this.speakToTextEnabled) {
         this.speakText();
       }
       this.inRound = true;
+
       localStorage.setItem('gameData', JSON.stringify(this.gameData));
     }
 
