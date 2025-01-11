@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.6.0] - 2025-01-11
+- Änderung: Name der Software wurde von "Dart Scorer" zu "PeiDu Scorer" geändert.
+- Änderung: Das Design für die Spieleinstellungen wurde komplett überarbeitet.
+
 ## [1.5.4] - 2024-04-19
 - Hinzugefügt: Alle Neuerungen aus SingleOut sind nun auch im DoubleOut Verfügbar!
 - Änderung: Spieler Status wurde angepasst, wenn kein Spieler aktiv ist, endet die Runde ohne Wertung.

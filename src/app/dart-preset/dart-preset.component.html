@@ -1,140 +1,84 @@
-<form class="mt-3">
-  <div class="bg-white shadow-md rounded-md p-4">
-    <div class="flex justify-between items-center">
-      <h3 class="text-lg font-semibold">Voreinstellungen</h3>
-      <button
-        *ngIf="resetButton"
-        type="button"
-        class="text-red-500 rounded"
-        (click)="resetData()"
-      >
-        <i class="fas fa-sync-alt"></i>
-      </button>
-    </div>
-
-    <app-error-message
+<div class="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
+  <header class="text-center mb-8">
+    <img src="assets/images/logo.png" alt="PeiDu Dart Scorer" class="mx-auto">
+  </header>
+  
+  <main class="w-full max-w-4xl space-y-6">
+  <div class="bg-gray-800 p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold text-green-500 mb-4">Spieler hinzufügen</h2>
+    <div class="mb-4">
+      <app-error-message
       *ngIf="errorMessage"
       [errorMessage]="errorMessage"
     ></app-error-message>
-    <input
-      type="text"
-      class="form-input mt-4 border rounded-md px-4 py-2 mr-2"
-      id="newPlayerName"
-      placeholder="Spieler 1"
-      [(ngModel)]="newPlayerName"
-      [ngModelOptions]="{ standalone: true }"
-      (input)="capitalizeFirstLetter()"
-    />
-
-    <button
-      type="submit"
-      class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-4 mr-2"
-      (click)="addPlayer()"
-    >
-      <i class="fa-solid fa-plus mr-2"></i>Spieler Hinzufügen
-    </button>
-    <button
-      type="button"
-      class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-4"
-      (click)="startGame()"
-    >
-      <i class="fa-solid fa-circle-play mr-2"></i>Spiel Starten
-    </button>
-
-    <p class="text-lg font-semibold underline mt-4">Teilnehmer:</p>
-    <ul class="mt-3">
-      <li *ngFor="let player of players" class="flex items-center">
-        {{ player.name }}
-        <span class="delete-player ml-2 cursor-pointer">
-          <app-choose-song-modal #songModal></app-choose-song-modal>
-
-          <i
-            class="fa-solid fa-music text-blue-500 mr-2"
-            (click)="openModal(players.indexOf(player))"
-          ></i>
-          <i
-            class="fa-regular fa-trash-can text-red-500"
-            (click)="removePlayer(players.indexOf(player))"
-          ></i>
-        </span>
-      </li>
-      <span *ngIf="players.length == 0" class="text-xs italic text-gray-500"
-        >Füge einen Spieler hinzu</span
-      >
-    </ul>
-
-    <div class="grid grid-cols-2 mt-4">
-      <div class="col-start-1">
-        <h5 class="text-lg font-semibold underline">Spielmodus</h5>
-        <div class="flex items-center mt-2">
-          <input
-            class="form-radio mt-1"
-            type="radio"
-            name="gameMode"
-            id="singleOut"
-            value="singleOut"
-            [checked]="gameMode === 'singleOut'"
-            (change)="updateGameMode('singleOut')"
-          />
-          <label class="ml-2 cursor-pointer" for="singleOut">Single Out</label>
-        </div>
-        <div class="flex items-center mt-2">
-          <input
-            class="form-radio mt-1"
-            type="radio"
-            name="gameMode"
-            id="doubleOut"
-            value="doubleOut"
-            [checked]="gameMode === 'doubleOut'"
-            (change)="updateGameMode('doubleOut')"
-          />
-          <label class="ml-2 cursor-pointer" for="doubleOut">Double Out</label>
-        </div>
-        <div *ngIf="!isLiteMode" class="flex items-center mt-2">
-          <input
-            class="form-radio mt-1"
-            type="radio"
-            name="gameMode"
-            id="aroundTheClock"
-            value="aroundTheClock"
-            [checked]="gameMode === 'aroundTheClock'"
-            (change)="updateGameMode('aroundTheClock')"
-          />
-          <label class="ml-2 cursor-pointer" for="aroundTheClock"
-            >Around the Clock</label
-          >
-        </div>
-      </div>
-      <div *ngIf="gameMode !== 'aroundTheClock'" class="col-start-2">
-        <h5 class="text-lg font-semibold underline">Score</h5>
-        <div class="flex items-center mt-2">
-          <input
-            class="form-radio mt-1"
-            type="radio"
-            name="scoreValue"
-            id="scoreValue301"
-            value="301"
-            [checked]="scoreValue === '301'"
-            (change)="updateScoreValue('301')"
-          />
-          <label class="ml-2 cursor-pointer" for="scoreValue301">301</label>
-        </div>
-        <div class="flex items-center mt-2">
-          <input
-            class="form-radio mt-1"
-            type="radio"
-            name="scoreValue"
-            id="scoreValue501"
-            value="501"
-            [checked]="scoreValue === '501'"
-            (change)="updateScoreValue('501')"
-          />
-          <label class="ml-2 cursor-pointer" for="scoreValue501">501</label>
-        </div>
-      </div>
     </div>
+    <div class="flex gap-2 mb-4">
+      <input
+        type="text"
+        [(ngModel)]="newPlayerName"
+        [ngModelOptions]="{ standalone: true }"
+        (keyup.enter)="addPlayer()"
+        placeholder="Spielername eingeben"
+        (input)="capitalizeFirstLetter()"
+        class="flex-grow px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      />
+      <button
+        (click)="addPlayer()"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-md">
+        + Hinzufügen
+      </button>
+    </div>
+    <ul class="space-y-2">
+      <li
+        *ngFor="let player of players"
+        class="flex justify-between items-center bg-gray-700 px-4 py-2 rounded-md">
+        <span>{{ player.playerName }}</span>
+        <div class="flex items-center gap-2">
+          <app-choose-song-modal #songModal></app-choose-song-modal>
+          <button
+          (click)="openModal(players.indexOf(player))"
+            class="text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-md">
+            <i class="fas fa-music"></i>
+          </button>
+          <button
+            (click)="removePlayer(players.indexOf(player))"
+            class="text-white bg-red-500 hover:bg-red-600 p-2 rounded-md">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </li>
+    </ul>
   </div>
-</form>
-
-<app-dart-preset-info class="mt-4"></app-dart-preset-info>
-<app-footer></app-footer>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+    <app-game-settings
+      [title]="'Spielmodus'"
+      [options]="gameModes"
+      [(selectedOption)]="selectedGameMode"
+      (selectedOptionChange)="updateGameMode($event)"
+      class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
+    </app-game-settings>
+    <app-game-settings
+      [title]="'Score'"
+      [options]="scores"
+      [(selectedOption)]="selectedScore"
+      (selectedOptionChange)="updateScoreValue($event)"
+      class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
+    </app-game-settings>
+  </div>
+  <div class="mt-2">
+    <button
+  (click)="startGame()"
+  class="w-full bg-green-500 hover:bg-green-600 text-white text-xl font-semibold py-4 rounded-lg mb-2">
+  Spiel starten
+</button>
+<button
+*ngIf="resetButton"
+  (click)="resetData()"
+  class="w-full bg-red-500 hover:bg-red-600 text-white text-xl font-semibold py-4 rounded-lg">
+  Spieldaten zurücksetzen
+</button>
+  </div>
+</main>
+<footer class="mt-10 text-gray-500">
+  <app-footer></app-footer>
+</footer>

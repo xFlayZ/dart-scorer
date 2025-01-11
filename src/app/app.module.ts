@@ -15,9 +15,10 @@ import { DartGameAroundTheClockComponent } from './dart-game-around-the-clock/da
 import { DartGameDoubleOutComponent } from './dart-game-double-out/dart-game-double-out.component';
 import { TextToSpeechService } from './services/text-to-speech.service';
 import { SoundService } from './services/sound.service';
-import { ChooseSongModalComponent } from './choose-song-modal/choose-song-modal.component';
 import { VoiceToTextService } from './services/voice-to-text.service';
 import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal-confirm-action.component';
+import { ChooseSongModalComponent } from './shared/choose-song-modal/choose-song-modal.component';
+import { GameSettingsComponent } from './shared/game-settings/game-settings.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,10 @@ import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal
     DartWinnerModalComponent,
     FooterComponent,
     DartGameAroundTheClockComponent,
-    DartGameDoubleOutComponent,
     ChooseSongModalComponent,
-    ModalConfirmActionComponent
+    DartGameDoubleOutComponent,
+    ModalConfirmActionComponent,
+    GameSettingsComponent
   ],
   imports: [
     BrowserModule,
