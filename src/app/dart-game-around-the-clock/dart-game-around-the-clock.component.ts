@@ -197,7 +197,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
     }
 
     nextPlayer() {
-      const currentPlayer = this.gameData[this.currentPlayerCount];
+      let currentPlayer = this.gameData[this.currentPlayerCount];
 
       if (this.isWinner) {
         this.winnerModalOpen = true;
@@ -213,6 +213,8 @@ export class DartGameAroundTheClockComponent implements OnInit {
         }
         
         this.currentPlayerCount = (this.playerCount > this.currentPlayerCount) ? this.currentPlayerCount + 1 : 0;
+
+        currentPlayer = this.gameData[this.currentPlayerCount];
         
         if (!currentPlayer.isActive) {
           this.nextPlayer()
@@ -270,7 +272,6 @@ export class DartGameAroundTheClockComponent implements OnInit {
         if (this.gameData[0]) {
           this.gameData[0].game++;
         }
-  
         this.playerCount = this.gameData.length - 1;
       }
       this.legEnd = false;
@@ -278,6 +279,12 @@ export class DartGameAroundTheClockComponent implements OnInit {
 
       if (this.speakToTextEnabled) {
         this.speakText();
+      }
+
+      const currentPlayer = this.gameData[this.currentPlayerCount];
+
+      if (!currentPlayer.isActive) {
+        this.nextPlayer();
       }
     }
 
