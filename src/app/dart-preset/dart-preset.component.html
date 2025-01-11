@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
+<div class="min-h-screen text-white p-6 flex flex-col items-center">
   <header class="text-center mb-8">
     <img src="assets/images/logo.png" alt="PeiDu Dart Scorer" class="mx-auto">
   </header>
@@ -32,7 +32,7 @@
       <li
         *ngFor="let player of players"
         class="flex justify-between items-center bg-gray-700 px-4 py-2 rounded-md">
-        <span>{{ player.playerName }}</span>
+        <span>{{ player.name }}</span>
         <div class="flex items-center gap-2">
           <app-choose-song-modal #songModal></app-choose-song-modal>
           <button
@@ -58,10 +58,18 @@
       class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
     </app-game-settings>
     <app-game-settings
+      *ngIf="needScore.includes(selectedGameMode)"
       [title]="'Score'"
       [options]="scores"
       [(selectedOption)]="selectedScore"
       (selectedOptionChange)="updateScoreValue($event)"
+      class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
+    </app-game-settings>
+    <app-game-settings
+      *ngIf="needDifficulty.includes(selectedGameMode)"
+      [title]="'Schwierigkeit'"
+      [options]="difficulty"
+      [(selectedOption)]="selectedDifficulty"
       class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
     </app-game-settings>
   </div>
