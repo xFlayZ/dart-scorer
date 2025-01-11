@@ -387,7 +387,8 @@ export class DartGameAroundTheClockComponent implements OnInit {
   // add updateDartValue later!
   }
 
-  checkIfOneActivePlayer() {
+  checkIfOneActivePlayer(player: any) {
+    player.isActive = !player.isActive;
     this.isOneActivePlayer = this.gameData.some(player => player.isActive);
   }
 
@@ -406,5 +407,20 @@ export class DartGameAroundTheClockComponent implements OnInit {
   toggleSpeakToTextEnabled(): void {
     this.speakToTextEnabled = !this.speakToTextEnabled;
     localStorage.setItem('speakToTextEnabled', JSON.stringify(this.speakToTextEnabled));
+  }
+
+  togglePlayerStatuss(player: any): void {
+    const currentPlayer = this.gameData[this.currentPlayerCount];
+    this.checkIfOneActivePlayer(player)
+    
+    if (!this.isOneActivePlayer && !this.legEnd) {
+      // add confirm modal
+      this.legEnd = true;
+    } else if (currentPlayer.player == player.player) {
+      // add confirm modal
+      if (!this.legEnd) {
+        this.nextPlayer();
+      }
+    }
   }
 }
