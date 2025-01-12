@@ -80,7 +80,11 @@
         <p class="text-white font-semibold uppercase text-sm tracking-wider">
           Lucky Number
         </p>
-        <p class="text-white font-bold text-6xl">{{ randomNumber }}</p>
+        <p class="text-white font-bold text-6xl">{{
+          difficulty === "normal"
+            ? "D" + randomNumber
+            : randomNumber
+        }}</p>
       </div>
     </div>
     <!-- random-number-end -->

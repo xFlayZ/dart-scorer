@@ -9,6 +9,7 @@ import { GameDataLuckyNumber } from '../interfaces/game-data-lucky-number';
 })
 export class DartGameLuckyNumbersComponent {
   public gameData: GameDataLuckyNumber[] = [];
+  public difficulty = 'easy';
   public playerCount = 0;
   public currentPlayerCount = 0;
   public randomNumber = 0;
@@ -26,6 +27,9 @@ export class DartGameLuckyNumbersComponent {
     if (savedData) {
       const { players } = JSON.parse(savedData);
       this.players = players;
+
+      const { difficulty } = JSON.parse(savedData);
+      this.difficulty = difficulty;
     }
 
     const shuffledPlayers = shuffleArray(this.players);
