@@ -3,6 +3,7 @@
 ## [1.7.0] - 2025-01-XX
 - Hinzugefügt: Neue Spielmodus-Karte "Killer-Dart" und Schwierigskeitsstufen für "Lucky-Number" in den Spieleinstellungen.
 - Hinzugefügt: Schwierigkeit "Doppel" wurde dem Spiel "Lucky-Number" hinzugefügt.
+- Hinzugefügt: Neues Player-Card System für SingleOut.
 
 ## [1.6.1] - 2025-01-12
 - Hinzugefügt: Schwierigskeitsstufe "Doppel" für Around the Clock.

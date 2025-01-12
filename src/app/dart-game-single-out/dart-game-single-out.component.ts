@@ -59,6 +59,7 @@ export class DartGameSingleOutComponent implements OnInit {
         if (emptyDartIndex === 2 || currentPlayer.score <= 0) {
           this.inRound = false;
           this.stopScoreToVoice();
+          this.nextPlayer();
         }
       }
     }
@@ -152,7 +153,7 @@ export class DartGameSingleOutComponent implements OnInit {
   nextPlayer() {
     this.ngZone.run(() => {
       let currentPlayer = this.gameData[this.currentPlayerCount];
-
+  
       if (currentPlayer.score === 0) {
         this.winnerModalOpen = true;
         this.celebrate(500);
@@ -164,43 +165,37 @@ export class DartGameSingleOutComponent implements OnInit {
           this.deleteLastDart();
         }
         if (this.lastRoundScore > currentPlayer.highestRound) {
-          if (this.lastRoundScore > 180) {
-            currentPlayer.highestRound = 180
-          } else {
-            currentPlayer.highestRound = this.lastRoundScore
-          }
+          currentPlayer.highestRound = Math.min(this.lastRoundScore, 180);
         }
         this.lastRoundScore = 0;
         currentPlayer.roundAverage = parseFloat((currentPlayer.roundTotal / currentPlayer.round).toFixed(2));
-
+  
         if (currentPlayer.isActive) {
           currentPlayer.round += 1;
-          this.previousPlayerCount = this.currentPlayerCount
+          this.previousPlayerCount = this.currentPlayerCount;
         }
         
-        this.currentPlayerCount = (this.playerCount > this.currentPlayerCount) ? this.currentPlayerCount + 1 : 0;
-
+        // Spielerrotation
+        this.gameData.push(this.gameData.splice(this.currentPlayerCount, 1)[0]);
+        this.currentPlayerCount = 0;  // Nächster Spieler wird zum aktiven Spieler
+        
         currentPlayer = this.gameData[this.currentPlayerCount];
-
-        if (!currentPlayer.isActive) {
-          this.nextPlayer()
-
-        }
-
+  
         currentPlayer.firstDart = '-';
         currentPlayer.secondDart = '-';
         currentPlayer.thirdDart = '-';
-
+  
+        this.calculateCheckoutCurrentPlayer();
+        if (this.speakToTextEnabled && currentPlayer.isActive) {
+          this.speakText();
+        }
+        this.inRound = true;
+        localStorage.setItem('gameData', JSON.stringify(this.gameData));
+        this.voiceToScore();
       }
-      this.calculateCheckoutCurrentPlayer();
-      if (this.speakToTextEnabled && currentPlayer.isActive) {
-        this.speakText();
-      }
-      this.inRound = true;
-      localStorage.setItem('gameData', JSON.stringify(this.gameData));
-      this.voiceToScore();
     });
   }
+  
 
   backToLastPlayer() { 
     // delete last darts currentPlayer
@@ -533,5 +528,9 @@ export class DartGameSingleOutComponent implements OnInit {
   checkIfOneActivePlayer(player: any) {
     player.isActive = !player.isActive;
     this.isOneActivePlayer = this.gameData.some(player => player.isActive);
+  }
+
+  get reversedGameData() {
+    return [...this.gameData].reverse();
   }
 }

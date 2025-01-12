@@ -1,5 +1,5 @@
 <!-- TopBar container -->
-<div class="w-full fixed top-0 left-0 z-50 bg-gray-800 shadow-md">
+<div class="w-1/2 fixed top-0 left-0 z-50 bg-gray-800 shadow-md">
   <div class="flex justify-between items-center p-4">
     <!-- Back Button -->
     <a
@@ -10,7 +10,9 @@
     </a>
 
     <!-- GameMode Text -->
-    <div class="text-lg text-white font-semibold">Single Out</div>
+    <div class="text-lg text-white font-semibold">
+      Single Out
+    </div>
 
     <!-- Settings button -->
     <button
@@ -22,27 +24,13 @@
   </div>
 </div>
 <!-- TopBar container end -->
-
-<div class="grid grid-cols-2">
-  <!-- active player card -->
-  <div class="player-card" style="max-height: 100vh; overflow-y: auto;">
-    <div class="bg-teal-700 text-white shadow-lg p-2 mt-20 mr-1">
-      <div class="grid grid-cols-3">
-        <div class="font-semibold items-center justify-start pl-4">
-          Aktueller Spieler
-        </div>
-        <div class="font-semibold flex items-center justify-center">
-          Runden Durchschnitt: {{ gameData[currentPlayerCount].roundAverage }}
-        </div>
-        <div class="font-semibold flex items-center justify-end pr-4">
-          Runde: {{ gameData[currentPlayerCount].round }}
-        </div>
-      </div>
-    </div>
-    <div class="bg-gray-800 text-white shadow-lg p-4 mr-1">
+<div class="grid grid-cols-2 gap-4 mt-3">
+  <div>
+    <!-- player-card 
+    <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20">
       <div class="grid grid-cols-12">
         <div
-          class="col-start-1 col-span-2 font-bold text-5xl text-center flex items-center"
+          class="col-start-1 col-span-3 font-bold text-5xl text-center flex items-center"
         >
           <span>{{ gameData[currentPlayerCount].player }}</span>
           <i
@@ -55,88 +43,134 @@
             (click)="backToLastPlayer()"
           ></i>
         </div>
-        <div class="col-start-11 text-center text-5xl mr-5">
+        <div class="col-start-6 font-bold text-5xl text-center">
           {{ gameData[currentPlayerCount].score }}
+        </div>
+        <div class="col-start-12 text-center text-5xl bg-yellow-500">
+          {{ gameData[currentPlayerCount].round }}
         </div>
       </div>
       <div class="grid grid-cols-12 mt-10">
         <div
-          class="col-start-1 col-span-2 h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          class="col-start-1 col-span-3 h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
           (click)="updateDartValue('firstDart')"
         >
           {{ gameData[currentPlayerCount].firstDart }}
         </div>
         <div
-          class="col-start-4 col-span-2 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          class="col-start-5 col-span-3 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
           (click)="updateDartValue('secondDart')"
         >
           {{ gameData[currentPlayerCount].secondDart }}
         </div>
         <div
-          class="col-start-7 col-span-2 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          class="col-start-9 col-span-3 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
           (click)="updateDartValue('thirdDart')"
         >
           {{ gameData[currentPlayerCount].thirdDart }}
         </div>
-        <div
-          class="col-start-10 col-span-2 text-center h-16 flex items-center justify-center text-gray-500 font-semibold text-4xl"
-        >
-          {{ gameData[currentPlayerCount].roundTotal }}
-        </div>
       </div>
-    </div>
-    <!-- active player card end -->
-    <!-- waiting player cards -->
+      <div class="possibleCheckout font-bold text-4xl mt-10 text-center">
+        <p>Möglicher Checkout:</p>
+        <p class="mt-5">{{ possibleCheckout }}</p>
+      </div>
+    </div>-->
+
+    <!-- player-card-end -->
+    <!-- game control buttons 
     <div
-      *ngFor="let playerData of gameData; let i = index"
-      [ngClass]="{ hidden: currentPlayerCount === i }"
+      class="bg-gray-800 text-white rounded-lg shadow-lg p-6 flex justify-center mt-2"
     >
-      <div class="bg-gray-700 text-gray-600 shadow-lg p-4 mt-2 mr-1">
-        <div class="grid grid-cols-12">
-          <div
-            class="col-start-1 col-span-2 font-bold text-5xl text-center flex items-center"
-          >
-            <span>{{ playerData.player }}</span>
-          </div>
-          <div class="col-start-11 text-center text-5xl mr-5">
-            {{ playerData.score }}
-          </div>
-        </div>
-        <div class="grid grid-cols-12 mt-10">
-          <div
-            class="col-start-1 col-span-2 h-16 flex items-center justify-center bg-gray-500 text-gray-700 font-extrabold text-4xl"
-          >
-            {{ playerData.firstDart }}
-          </div>
-          <div
-            class="col-start-4 col-span-2 text-center h-16 flex items-center justify-center bg-gray-500 text-gray-700 font-extrabold text-4xl"
-          >
-            {{ playerData.secondDart }}
-          </div>
-          <div
-            class="col-start-7 col-span-2 text-center h-16 flex items-center justify-center bg-gray-500 text-gray-700 font-extrabold text-4xl"
-          >
-            {{ playerData.thirdDart }}
-          </div>
-          <div
-            class="col-start-10 col-span-2 text-center h-16 flex items-center justify-center text-gray-600 font-semibold text-4xl"
-          >
-            {{ playerData.roundTotal }}
-          </div>
+      <div *ngIf="!legEnd" class="buttons-in-round">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+          (click)="nextPlayer()"
+        >
+          <i class="fa-solid fa-user mr-2"></i>Nächster Spieler
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="deleteLastDart()"
+          [ngClass]="{
+            'opacity-50 cursor-not-allowed':
+              gameData[currentPlayerCount].firstDart === '-'
+          }"
+          [disabled]="gameData[currentPlayerCount].firstDart === '-'"
+        >
+          <i class="fa-solid fa-rotate-left mr-2"></i>Letzten Dart löschen
+        </button>
+      </div>
+      <div *ngIf="legEnd" class="buttons-after-round text-center">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          (click)="nextRound()"
+          [ngClass]="{
+            'opacity-50 cursor-not-allowed': !isOneActivePlayer
+          }"
+          [disabled]="!isOneActivePlayer"
+        >
+          <i class="fa-solid fa-play mr-2"></i>Neue Runde
+        </button>
+        <div *ngIf="!isOneActivePlayer" class="text-red-800 mt-2">
+          <strong>Mindestens eine Spieler muss aktiv sein!</strong>
         </div>
       </div>
-    </div>
-    <!-- waiting player cards end -->
+    </div>-->
+
+    <!-- game control buttons end -->
   </div>
-  <div class="score-input">
+  <div class="">
     <app-dart-board
-      *ngIf="!countButtonsEnabled"
+    *ngIf="!countButtonsEnabled"
       (thrownNumber)="onThrownNumberChange($event)"
     ></app-dart-board>
     <app-dart-count-buttons
-      *ngIf="countButtonsEnabled"
+    *ngIf="countButtonsEnabled"
       (thrownNumber)="onThrownNumberChange($event)"
     ></app-dart-count-buttons>
+  </div>
+</div>
+
+<!-- gameData Table -->
+<div class="mt-8">
+  <div class="overflow-x-auto mt-4">
+    <table class="table-auto min-w-full bg-white shadow-md overflow-hidden">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="px-4 py-2 text-left">Spieler</th>
+          <th class="px-4 py-2 text-left">Gewonnene Legs</th>
+          <th class="px-4 py-2 text-left">Rest Score</th>
+          <th class="px-4 py-2 text-left">Runde</th>
+          <th class="px-4 py-2 text-left">Runden Durchschnitt</th>
+          <th class="px-4 py-2 text-left">Höchster Wurf</th>
+          <th class="px-4 py-2 text-left">Aktiv?</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr *ngFor="let player of sortedGameData" class="border-b">
+          <td class="px-4 py-2 text-left">{{ player.player }}</td>
+          <td class="px-4 py-2 text-left">{{ player.wins }}</td>
+          <td class="px-4 py-2 text-left">{{ player.score }}</td>
+          <td class="px-4 py-2 text-left">{{ player.round }}</td>
+          <td class="px-4 py-2 text-left">{{ player.roundAverage }}</td>
+          <td class="px-4 py-2 text-left">{{ player.highestRound }}</td>
+          <td class="px-4 py-2 text-left">
+            <div class="player-status">
+              <i
+                *ngIf="player.isActive"
+                class="fa-solid fa-check text-green-500 cursor-pointer"
+                (click)="togglePlayerStatus(player)"
+              ></i>
+              <i
+                *ngIf="!player.isActive"
+                class="fa-solid fa-ban text-red-500 cursor-pointer"
+                (click)="togglePlayerStatus(player)"
+              ></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -234,7 +268,7 @@
             </label>
           </div>
           <!-- voice to text toggle button end -->
-          <!-- count buttons toggle button -->
+            <!-- count buttons toggle button -->
           <div class="count-buttons">
             <label class="inline-flex items-center cursor-pointer">
               <input
