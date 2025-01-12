@@ -29,6 +29,7 @@ export class DartGameSingleOutComponent implements OnInit {
   public playSoundEnabled = true;
   public animationEnabled = true;
   public voiceToTextEnabled = false;
+  public countButtonsEnabled = false;
   public isSettingsModalOpen = false;
 
   closeModalEvent = new EventEmitter<void>();
@@ -364,6 +365,11 @@ export class DartGameSingleOutComponent implements OnInit {
     localStorage.setItem('voiceToTextEnabled', String(this.voiceToTextEnabled));
   }
 
+  toggleCountButtonsEnabled(): void {
+    this.countButtonsEnabled = !this.countButtonsEnabled;
+    localStorage.setItem('countButtonsEnabled', String(this.countButtonsEnabled));
+  }
+
   playSound(path: string, sound: string): void {
     this.ngZone.run(() => {
     if (this.playSoundEnabled) {
@@ -494,6 +500,11 @@ export class DartGameSingleOutComponent implements OnInit {
     if (voiceToTextEnabled !== null) {
       this.voiceToTextEnabled = voiceToTextEnabled === 'true';
     }
+
+    const countButtonsEnabled = localStorage.getItem('countButtonsEnabled');
+    if (countButtonsEnabled !== null) {
+      this.countButtonsEnabled = countButtonsEnabled === 'true';
+    }
   }
 
   resetRound(): void {
@@ -504,7 +515,7 @@ export class DartGameSingleOutComponent implements OnInit {
     this.setupGame();
   }
 
-  togglePlayerStatuss(player: any): void {
+  togglePlayerStatus(player: any): void {
     const currentPlayer = this.gameData[this.currentPlayerCount];
     this.checkIfOneActivePlayer(player)
     

@@ -27,7 +27,7 @@
   <i class="h-5 w-6 text-black text-center fa-solid fa-gear"></i>
 </button>
 <!-- settings button end -->
-<div class="grid grid-cols-2 gap-4 mt-3 ml-3">
+<div class="grid grid-cols-2 gap-4 mt-3">
   <div>
     <!-- player-card -->
     <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20">
@@ -124,8 +124,13 @@
   </div>
   <div>
     <app-dart-board
+    *ngIf="!countButtonsEnabled"
       (thrownNumber)="onThrownNumberChange($event)"
     ></app-dart-board>
+    <app-dart-count-buttons
+    *ngIf="countButtonsEnabled"
+      (thrownNumber)="onThrownNumberChange($event)"
+    ></app-dart-count-buttons>
   </div>
 </div>
 
@@ -158,12 +163,12 @@
               <i
                 *ngIf="player.isActive"
                 class="fa-solid fa-check text-green-500 cursor-pointer"
-                (click)="togglePlayerStatuss(player)"
+                (click)="togglePlayerStatus(player)"
               ></i>
               <i
                 *ngIf="!player.isActive"
                 class="fa-solid fa-ban text-red-500 cursor-pointer"
-                (click)="togglePlayerStatuss(player)"
+                (click)="togglePlayerStatus(player)"
               ></i>
             </div>
           </td>
@@ -267,6 +272,23 @@
             </label>
           </div>
           <!-- voice to text toggle button end -->
+            <!-- count buttons toggle button -->
+          <div class="count-buttons">
+            <label class="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                value=""
+                class="sr-only peer"
+                (click)="toggleCountButtonsEnabled()"
+                [(ngModel)]="countButtonsEnabled"
+              />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 text-black">Buttonzähler</span>
+            </label>
+          </div>
+          <!-- count buttons toggle button end -->
           <!-- reset round button -->
           <div class="round-reset-button">
             <button

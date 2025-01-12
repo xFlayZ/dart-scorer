@@ -1,0 +1,20 @@
+<div class="max-w-7xl mx-auto p-4 mt-16">
+    <div class="grid grid-cols-7 gap-4">
+      <!-- Loop für die Zahlen 1-20 -->
+      <ng-container *ngFor="let number of numbers">
+        <div class="flex flex-col space-y-2">
+          <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count(number.toString())">{{ number }}</button>
+          <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count('D' + number)">{{ 'D' + number }}</button>
+          <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count('T' + number)">{{ 'T' + number }}</button>
+        </div>
+      </ng-container>
+  
+      <!-- Bulls und Out Buttons -->
+      <div class="flex flex-col space-y-2">
+        <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count('25')">B</button>
+        <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count('50')">DB</button>
+        <button class="btn-base text-white bg-gray-500 hover:bg-gray-600" (click)="count('0')">Out</button>
+      </div>
+    </div>
+  </div>
+  

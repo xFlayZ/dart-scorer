@@ -1,0 +1,14 @@
+.btn-base {
+    width: 100%; /* Volle Breite innerhalb der Spalte */
+    padding: 8px 16px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+    font-weight: 600;
+  }
+
+  .btn-base:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }

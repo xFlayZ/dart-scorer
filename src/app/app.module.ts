@@ -20,6 +20,7 @@ import { ModalConfirmActionComponent } from './shared/modal-confirm-action/modal
 import { ChooseSongModalComponent } from './shared/choose-song-modal/choose-song-modal.component';
 import { GameSettingsComponent } from './shared/game-settings/game-settings.component';
 import { DartGameLuckyNumbersComponent } from './dart-game-lucky-numbers/dart-game-lucky-numbers.component';
+import { DartCountButtonsComponent } from './dart-count-buttons/dart-count-buttons.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DartGameLuckyNumbersComponent } from './dart-game-lucky-numbers/dart-ga
     DartGameDoubleOutComponent,
     ModalConfirmActionComponent,
     GameSettingsComponent,
-    DartGameLuckyNumbersComponent
+    DartGameLuckyNumbersComponent,
+    DartCountButtonsComponent
   ],
   imports: [
     BrowserModule,
