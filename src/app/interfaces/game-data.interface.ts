@@ -1,6 +1,7 @@
 export interface GameData {
     player: string;
     score: number;
+    lastScore: number;
     wins: number;
     roundAverage: number;
     totalAverage: number;

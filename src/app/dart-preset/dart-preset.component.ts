@@ -64,7 +64,7 @@ export class DartPresetComponent implements OnInit {
         },
       ],
     },
-    {
+    /*{
       value: 'killerDart',
       label: 'Killer Dart',
       backgroundImage: 'assets/images/killer_dart.webp',
@@ -80,7 +80,7 @@ export class DartPresetComponent implements OnInit {
           backgroundImage: 'assets/images/normal.png',
         },
       ],
-    },
+    },*/
   ];
 
   scores = [
@@ -97,7 +97,7 @@ export class DartPresetComponent implements OnInit {
   ];
 
   needScore = ['singleOut', 'doubleOut'];
-  needDifficulty = ['aroundTheClock', 'luckyNumber', 'killerDart'];
+  needDifficulty = ['aroundTheClock', 'luckyNumber', ];
 
   selectedGameMode = 'singleOut';
   selectedScore = '301';

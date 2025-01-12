@@ -1,7 +1,8 @@
 # Changelog
 
 ## [1.7.0] - 2025-01-XX
-- Hinzugefügt: Neue Spielmodus-Karte "Killer-Dart" und Schwierigskeitsstufen für "Lucky-Number" in den Spieleinstellungen.
+- Hinzugefügt: Neue Spielmodus-Karte "Killer-Dart" (Derzeit ausgeblendet)
+- Hinzugefügt: Schwierigskeitsstufe "Doppel" für "Lucky-Number" in den Spieleinstellungen.
 - Hinzugefügt: Schwierigkeit "Doppel" wurde dem Spiel "Lucky-Number" hinzugefügt.
 - Hinzugefügt: Neues Player-Card System für SingleOut.
 

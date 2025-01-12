@@ -78,6 +78,7 @@ export class DartGameDoubleOutComponent implements OnInit {
       this.gameData = shuffledPlayers.map(player => ({
         player: player.name,
         score: scoreValueNum,
+        lastScore: scoreValueNum,
         wins: 0,
         roundAverage: 0,
         totalAverage: 0,

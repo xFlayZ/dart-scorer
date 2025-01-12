@@ -47,12 +47,11 @@
           <span>{{ gameData[currentPlayerCount].player }}</span>
           <i
             *ngIf="
-              currentPlayerCount !== previousPlayerCount &&
-              gameData[previousPlayerCount].firstDart !== '-' &&
+              undoLastActionEnabled &&
               !legEnd
             "
             class="fa-2xs fa-solid fa-rotate-left text-red-800 ml-1 mb-8"
-            (click)="backToLastPlayer()"
+            (click)="undoLastAction()"
           ></i>
         </div>
         <div class="col-start-11 text-center text-5xl mr-5">
@@ -62,19 +61,16 @@
       <div class="grid grid-cols-12 mt-10">
         <div
           class="col-start-1 col-span-2 h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
-          (click)="updateDartValue('firstDart')"
         >
           {{ gameData[currentPlayerCount].firstDart }}
         </div>
         <div
           class="col-start-4 col-span-2 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
-          (click)="updateDartValue('secondDart')"
         >
           {{ gameData[currentPlayerCount].secondDart }}
         </div>
         <div
           class="col-start-7 col-span-2 text-center h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
-          (click)="updateDartValue('thirdDart')"
         >
           {{ gameData[currentPlayerCount].thirdDart }}
         </div>
