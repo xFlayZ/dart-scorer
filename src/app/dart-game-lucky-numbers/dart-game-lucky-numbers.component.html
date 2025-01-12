@@ -17,7 +17,7 @@
 </a>
 <!-- back button end -->
 
-<div class="grid grid-cols-2 gap-4 mt-3">
+<div class="grid grid-cols-2 gap-4">
   <div>
     <!-- player-card -->
     <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20">
@@ -50,31 +50,40 @@
     <div
       class="bg-gray-800 text-white rounded-lg shadow-lg p-6 flex justify-center mt-2"
     >
+      <div *ngIf="isOneActivePlayer">
         <button
           class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mr-2"
           (click)="nextNumber()"
         >
-        <i class="fa-solid fa-check mr-2"></i>Getroffen
+          <i class="fa-solid fa-check mr-2"></i>Getroffen
         </button>
         <button
           class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
           (click)="nextPlayer()"
         >
-        <i class="fa-solid fa-x mr-2"></i>Nicht getroffen
+          <i class="fa-solid fa-x mr-2"></i>Nicht getroffen
         </button>
+      </div>
+      <div *ngIf="!isOneActivePlayer" class="mt-4">
+        <span class="text-red-500 font-semibold"> Es muss mindestens ein Spieler aktiv sein, um das Spiel fortzusetzen! </span>
+      </div>
     </div>
 
     <!-- game control buttons end -->
   </div>
   <div>
- <!-- random-number -->
- <div class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20 h-52 flex justify-center items-center">
-    <div class="bg-gray-700 p-8 shadow flex flex-col items-center">
-      <p class="text-white font-semibold uppercase text-sm tracking-wider">Lucky Number</p>
-      <p class="text-white font-bold text-6xl">{{ randomNumber }}</p>
+    <!-- random-number -->
+    <div
+      class="bg-gray-800 text-white rounded-lg shadow-lg p-6 mt-20 h-52 flex justify-center items-center"
+    >
+      <div class="bg-gray-700 p-8 shadow flex flex-col items-center">
+        <p class="text-white font-semibold uppercase text-sm tracking-wider">
+          Lucky Number
+        </p>
+        <p class="text-white font-bold text-6xl">{{ randomNumber }}</p>
+      </div>
     </div>
-  </div>
-  <!-- random-number-end -->
+    <!-- random-number-end -->
   </div>
 </div>
 

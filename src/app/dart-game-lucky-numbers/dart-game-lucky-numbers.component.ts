@@ -46,7 +46,7 @@ export class DartGameLuckyNumbersComponent {
 
   nextNumber() {
     let currentPlayer = this.gameData[this.currentPlayerCount];
-    currentPlayer.thrownNumbers += 1; 
+    currentPlayer.thrownNumbers += 1;
 
     if (this.gameData && this.gameData.length > 0) {
       const lastPlayer = this.gameData.shift();
@@ -76,21 +76,23 @@ export class DartGameLuckyNumbersComponent {
   }
 
   nextPlayer() {
-    let currentPlayer = this.gameData[this.currentPlayerCount];
+    if (this.isOneActivePlayer) {
+      let currentPlayer = this.gameData[this.currentPlayerCount];
 
-    currentPlayer.trys += 1;
+      currentPlayer.trys += 1;
 
-    this.currentPlayerCount =
-      this.playerCount > this.currentPlayerCount
-        ? this.currentPlayerCount + 1
-        : 0;
+      this.currentPlayerCount =
+        this.playerCount > this.currentPlayerCount
+          ? this.currentPlayerCount + 1
+          : 0;
 
-    localStorage.setItem('gameData', JSON.stringify(this.gameData));
+      localStorage.setItem('gameData', JSON.stringify(this.gameData));
 
-    currentPlayer = this.gameData[this.currentPlayerCount];
+      currentPlayer = this.gameData[this.currentPlayerCount];
 
-    if (!currentPlayer.isActive) {
-      this.nextPlayer();
+      if (!currentPlayer.isActive) {
+        this.nextPlayer();
+      }
     }
   }
 
@@ -119,9 +121,9 @@ export class DartGameLuckyNumbersComponent {
   generateNewRandomNumber() {
     let newNumber;
     do {
-        newNumber = Math.floor(Math.random() * 20) + 1;
+      newNumber = Math.floor(Math.random() * 20) + 1;
     } while (newNumber === this.randomNumber);
 
     this.randomNumber = newNumber;
-}
+  }
 }
