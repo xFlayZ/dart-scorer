@@ -25,7 +25,7 @@ export class DartGameSingleOutComponent implements OnInit {
   public winnerModalOpen = false;
   public legEnd = false;
   public isOneActivePlayer = true;
-  public speakToTextEnabled = true;
+  public speakToTextEnabled = false;
   public playSoundEnabled = true;
   public animationEnabled = true;
   public voiceToTextEnabled = false;
