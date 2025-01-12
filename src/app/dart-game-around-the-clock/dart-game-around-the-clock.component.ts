@@ -10,6 +10,7 @@ import { TextToSpeechService } from '../services/text-to-speech.service';
 })
 export class DartGameAroundTheClockComponent implements OnInit {
   public gameData: GameDataAroundTheClock[] = [];
+  public difficulty = 'easy';
   public playerCount = 0;
   public currentPlayerCount = 0;
   public previousPlayerCount = 0;
@@ -34,6 +35,9 @@ export class DartGameAroundTheClockComponent implements OnInit {
     if (savedData) {
       const { players } = JSON.parse(savedData);
       this.players = players;
+
+      const { difficulty } = JSON.parse(savedData);
+      this.difficulty = difficulty;
     }
 
     const shuffledPlayers = shuffleArray(this.players);

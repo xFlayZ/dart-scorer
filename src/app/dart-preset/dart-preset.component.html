@@ -68,7 +68,7 @@
     <app-game-settings
       *ngIf="needDifficulty.includes(selectedGameMode)"
       [title]="'Schwierigkeit'"
-      [options]="difficulty"
+      [options]="getDifficultyOptions()"
       [(selectedOption)]="selectedDifficulty"
       class="flex flex-col justify-between bg-gray-800 rounded-lg shadow-md">
     </app-game-settings>
