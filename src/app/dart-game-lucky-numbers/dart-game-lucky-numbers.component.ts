@@ -45,9 +45,9 @@ export class DartGameLuckyNumbersComponent {
   }
 
   nextNumber() {
-    const currentPlayer = this.gameData[this.currentPlayerCount];
+    let currentPlayer = this.gameData[this.currentPlayerCount];
     currentPlayer.thrownNumbers += 1; 
-    
+
     if (this.gameData && this.gameData.length > 0) {
       const lastPlayer = this.gameData.shift();
 
@@ -63,6 +63,8 @@ export class DartGameLuckyNumbersComponent {
 
       this.playerCount = this.gameData.length - 1;
     }
+
+    currentPlayer = this.gameData[this.currentPlayerCount];
 
     this.generateNewRandomNumber();
 
