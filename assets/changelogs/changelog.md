@@ -2,6 +2,7 @@
 
 ## [1.6.1] - 2025-01-12
 - Hinzugefügt: Schwierigskeitsstufe "Doppel" für Around the Clock.
+- Hinzugefügt: Innerhalb des SingleOut Modus gibt es ein optionales "Dartfeld" statt "Dartboard" zum tracken des Scores. (BETA) 
 - Änderung: Einstellungen -> Sprachansagen -> Standardmäßig auf "aus".
 
 ## [1.6.0] - 2025-01-11
