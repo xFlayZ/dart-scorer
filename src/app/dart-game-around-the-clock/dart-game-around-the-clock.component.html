@@ -40,7 +40,11 @@
           {{ gameData[currentPlayerCount].player }}
         </div>
         <div class="col-start-6 font-bold text-5xl text-center">
-          {{ gameData[currentPlayerCount].score }}
+          {{
+            difficulty === "normal"
+              ? "D" + gameData[currentPlayerCount].score
+              : gameData[currentPlayerCount].score
+          }}
         </div>
         <div class="col-start-12 text-center text-5xl bg-yellow-500">
           {{ gameData[currentPlayerCount].round }}
@@ -127,27 +131,10 @@
       <thead class="bg-gray-800 text-white">
         <tr>
           <th class="px-4 py-2 text-left">Spieler</th>
-          <th class="px-4 py-2 text-left">1</th>
-          <th class="px-4 py-2 text-left">2</th>
-          <th class="px-4 py-2 text-left">3</th>
-          <th class="px-4 py-2 text-left">4</th>
-          <th class="px-4 py-2 text-left">5</th>
-          <th class="px-4 py-2 text-left">6</th>
-          <th class="px-4 py-2 text-left">7</th>
-          <th class="px-4 py-2 text-left">8</th>
-          <th class="px-4 py-2 text-left">9</th>
-          <th class="px-4 py-2 text-left">10</th>
-          <th class="px-4 py-2 text-left">11</th>
-          <th class="px-4 py-2 text-left">12</th>
-          <th class="px-4 py-2 text-left">13</th>
-          <th class="px-4 py-2 text-left">14</th>
-          <th class="px-4 py-2 text-left">15</th>
-          <th class="px-4 py-2 text-left">16</th>
-          <th class="px-4 py-2 text-left">17</th>
-          <th class="px-4 py-2 text-left">18</th>
-          <th class="px-4 py-2 text-left">19</th>
-          <th class="px-4 py-2 text-left">20</th>
-        </tr>
+            <th *ngFor="let number of tableFieldNumbers" class="px-4 py-2 text-left">
+              {{ difficulty === 'normal' ? 'D' + number : number }}
+            </th>
+          </tr>
       </thead>
       <tbody class="text-gray-700">
         <!-- Sortiere Spieler nach gewonnenen Runden -->

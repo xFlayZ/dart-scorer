@@ -21,6 +21,7 @@ export class DartGameAroundTheClockComponent implements OnInit {
   public legEnd = false;
   public isOneActivePlayer = true;
   public speakToTextEnabled = false;
+  public tableFieldNumbers = Array.from({length: 20}, (_, i) => i + 1);
 
   @Input() players: string[] = [];
 
@@ -107,7 +108,12 @@ export class DartGameAroundTheClockComponent implements OnInit {
     updatePlayerScore(thrownNumber: string) {
       const currentPlayer = this.gameData[this.currentPlayerCount];
       const multiplier = thrownNumber.charAt(0);
-      const number = (multiplier === 'T' || multiplier === 'D') ? thrownNumber.slice(1) : thrownNumber;
+      let number = (multiplier === 'T' || multiplier === 'D') ? thrownNumber.slice(1) : thrownNumber;
+
+      if (this.difficulty === 'normal') {
+        number = (multiplier === 'D') ? thrownNumber.slice(1) : "0";
+      }
+
       const score = parseInt(number);
 
       if (currentPlayer.score === 1) {
