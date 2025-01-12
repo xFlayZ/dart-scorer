@@ -1,21 +1,67 @@
 <div
   *ngIf="isOpen"
-  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50"
+  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75"
 >
-  <div class="relative mx-auto max-w-lg">
-    <div class="bg-white rounded-lg shadow-lg p-6">
+  <div class="relative mx-auto max-w-4xl">
+    <div class="bg-gray-700 rounded-lg shadow-lg p-6">
       <!-- Modal Content -->
       <div class="modal-content">
-        <div class="modal-header flex justify-between border-b pb-4">
-          <h3 class="modal-title text-lg font-semibold">Runde beendet!</h3>
+        <div
+          class="modal-header flex justify-between border-b border-gray-600 pb-4"
+        >
+          <div class="flex-grow text-center">
+            <h3 class="modal-title text-lg font-semibold text-green-500">
+              {{ winner }} hat die Runde Gewonnen!
+            </h3>
+          </div>
+
           <button
-            class="modal-close text-gray-600 hover:text-gray-800"
+            class="modal-close text-gray-300 hover:text-gray-500 p-2"
             (click)="closeModal()"
           >
             X
           </button>
         </div>
-        <div class="modal-body pt-4">{{ winner }} hat die Runde Gewonnen!</div>
+        <div class="modal-body pt-4">
+          <div class="flex justify-center">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm bg-gray-700 rounded-lg">
+                <thead class="text-xs text-white uppercase bg-gray-800">
+                  <tr>
+                    <th class="px-4 py-2">Spieler</th>
+                    <th class="px-4 py-2">Gewonnene Legs</th>
+                    <th class="px-4 py-2">Rest Score</th>
+                    <th class="px-4 py-2">Runde</th>
+                    <th class="px-4 py-2">Runden Durchschnitt</th>
+                    <th class="px-4 py-2">Höchster Wurf</th>
+                  </tr>
+                </thead>
+                <tbody class="text-white">
+                  <tr *ngFor="let player of sortedGameData" class="border-b">
+                    <td class="px-4 py-2 text-center">{{ player.player }}</td>
+                    <td class="px-4 py-2 text-center">{{ player.wins }}</td>
+                    <td class="px-4 py-2 text-center">{{ player.score }}</td>
+                    <td class="px-4 py-2 text-center">{{ player.round }}</td>
+                    <td class="px-4 py-2 text-center">
+                      {{ player.roundAverage }}
+                    </td>
+                    <td class="px-4 py-2 text-center">
+                      {{ player.highestRound }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="flex-grow text-center mt-5">
+            <button
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+            (click)="closeModal()"
+          >
+            <i class="fa-solid fa-play mr-2"></i>Neue Runde
+          </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -45,12 +45,24 @@
           class="col-start-1 col-span-2 font-bold text-5xl text-center flex items-center"
         >
           <span>{{ gameData[currentPlayerCount].player }}</span>
+          <div class="player-status ml-2 mb-8">
+            <i
+              *ngIf="gameData[currentPlayerCount].isActive"
+              class="fa-2xs fa-solid fa-check text-green-500 cursor-pointer"
+              (click)="togglePlayerStatus(gameData[currentPlayerCount])"
+            ></i>
+            <i
+              *ngIf="!gameData[currentPlayerCount].isActive"
+              class="fa-2xs fa-solid fa-ban text-red-500 cursor-pointer"
+              (click)="togglePlayerStatus(gameData[currentPlayerCount])"
+            ></i>
+          </div>
           <i
             *ngIf="
               undoLastActionEnabled &&
               !legEnd
             "
-            class="fa-2xs fa-solid fa-rotate-left text-red-800 ml-1 mb-8"
+            class="fa-2xs fa-solid fa-rotate-left text-red-800 cursor-pointer ml-2 mb-8"
             (click)="undoLastAction()"
           ></i>
         </div>
@@ -93,6 +105,18 @@
             class="col-start-1 col-span-2 font-bold text-5xl text-center flex items-center"
           >
             <span>{{ playerData.player }}</span>
+            <div class="player-status ml-2 mb-8">
+              <i
+                *ngIf="playerData.isActive"
+                class="fa-2xs fa-solid fa-check text-green-500 cursor-pointer"
+                (click)="togglePlayerStatus(playerData)"
+              ></i>
+              <i
+                *ngIf="!playerData.isActive"
+                class="fa-2xs fa-solid fa-ban text-red-500 cursor-pointer"
+                (click)="togglePlayerStatus(playerData)"
+              ></i>
+            </div>
           </div>
           <div class="col-start-11 text-center text-5xl mr-5">
             {{ playerData.score }}
@@ -140,6 +164,7 @@
 <app-dart-winner-modal
   [isOpen]="winnerModalOpen"
   [winner]="gameData[currentPlayerCount].player"
+  [gameData]="gameData"
   (closeModalEvent)="closeWinnerModal()"
 ></app-dart-winner-modal>
 

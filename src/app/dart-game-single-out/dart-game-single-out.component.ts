@@ -167,6 +167,7 @@ export class DartGameSingleOutComponent implements OnInit {
 
       if (currentPlayer.score === 0) {
         this.winnerModalOpen = true;
+        currentPlayer.wins += 1;
         this.celebrate(500);
         this.playSound('victory', currentPlayer.winnerSong);
       } else {
@@ -294,8 +295,6 @@ export class DartGameSingleOutComponent implements OnInit {
   }
 
   closeWinnerModal() {
-    const currentPlayer = this.gameData[this.currentPlayerCount];
-    currentPlayer.wins += 1;
     this.legEnd = true;
     this.winnerModalOpen = false;
     this.nextRound();
