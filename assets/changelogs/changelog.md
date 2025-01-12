@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.6.1] - 2025-01-12
+- Hinzugefügt: Schwierigskeitsstufe "Doppel" für Around the Clock.
+- Änderung: Einstellungen -> Sprachansagen -> Standardmäßig auf "aus".
+
 ## [1.6.0] - 2025-01-11
 - Hinzugefügt: Neuer Spielmodus "Lucky Number".
 - Änderung: Name der Software wurde von "Dart Scorer" zu "PeiDu Scorer" geändert.
