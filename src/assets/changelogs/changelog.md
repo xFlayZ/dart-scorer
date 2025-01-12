@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.7.0] - 2025-01-XX
+- Hinzugefügt: Neue Spielmodus-Karte "Killer-Dart" und Schwierigskeitsstufen für "Lucky-Number" in den Spieleinstellungen.
+
 ## [1.6.1] - 2025-01-12
 - Hinzugefügt: Schwierigskeitsstufe "Doppel" für Around the Clock.
 - Hinzugefügt: Innerhalb des SingleOut Modus gibt es ein optionales "Dartfeld" statt "Dartboard" zum tracken des Scores. (BETA) 
