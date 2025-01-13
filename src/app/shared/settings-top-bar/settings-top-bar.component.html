@@ -1,0 +1,107 @@
+<!-- TopBar container -->
+<div class="w-full fixed top-0 left-0 z-50 bg-gray-800 shadow-md">
+  <div class="flex justify-between items-center p-4">
+    <!-- Back Button -->
+    <a
+      href="/"
+      class="p-3 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100 transition duration-300"
+    >
+      <i class="fas fa-arrow-left text-gray-800 text-lg"></i>
+    </a>
+
+    <!-- GameMode Text -->
+    <div class="text-lg text-white font-semibold">
+      <ng-content select="[game-mode]"></ng-content>
+    </div>
+
+    <!-- Settings button -->
+    <button
+      class="p-3 rounded-full shadow-lg bg-white flex items-center justify-center hover:bg-gray-100 transition duration-300"
+      (click)="toggleModal()"
+    >
+      <i class="fas fa-cog text-gray-800 text-lg"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<div
+  *ngIf="isModalOpen"
+  class="fixed inset-0 overflow-y-auto flex items-center justify-center z-50 bg-gray-800 bg-opacity-75"
+>
+  <div class="relative mx-auto max-w-4xl">
+    <div class="bg-gray-700 rounded-lg shadow-lg p-6">
+      <!-- Modal Content -->
+      <div class="modal-content">
+        <div
+          class="modal-header flex justify-between border-b border-gray-600 pb-4"
+        >
+          <div class="flex-grow text-center">
+            <h3 class="modal-title text-lg font-semibold text-white">
+              Einstellungen
+            </h3>
+          </div>
+
+          <button
+            class="modal-close text-white hover:text-gray-500"
+            (click)="toggleModal()"
+          >
+            X
+          </button>
+        </div>
+        <div class="modal-body pt-4">
+            <div class="overflow-x-auto">
+              <div *ngFor="let option of settingsOptions" class="setting-option">
+                <label>
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      value=""
+                      class="sr-only peer"
+                      (change)="updateSettings()"
+                      [(ngModel)]="settings[option.key]"
+                    />
+                    <div
+                      class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-zinc-400 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                    ></div>
+                    <span class="ms-3 text-white">{{ option.label }}</span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          <div class="flex-grow text-center mt-5">
+            <!-- reset round button -->
+          <div class="round-reset-button">
+            <button
+              class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="onResetRound()"
+              [ngClass]="{
+                'opacity-50 cursor-not-allowed': resetRoundButtonEnabled
+              }"
+              [disabled]="resetRoundButtonEnabled"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Runde Zurücksetzen
+            </button>
+          </div>
+          <!-- reset round button end -->
+          <!-- game reset button -->
+          <div class="game-reset-button">
+            <button
+              class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2"
+              (click)="onResetGame()"
+              [ngClass]="{
+                'opacity-50 cursor-not-allowed': resetGameButtonEnabled
+              }"
+              [disabled]="resetGameButtonEnabled"
+            >
+              <i class="fas fa-sync-alt mr-2"></i>Spiel Zurücksetzen
+            </button>
+          </div>
+          <!-- game reset button end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

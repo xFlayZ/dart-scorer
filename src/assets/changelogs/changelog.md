@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.7.0] - 2025-01-XX
+## [1.7.1] - 2025-01-14
+- Rework: Die TypeScript der "Single-Out" Komponente wurde komplett überarbeitet. (WIP)
+    - Top-Bar-Settings: Die oberen Einstellungen sind nun in einer eigenen Komponente, um sie später leichter zu übernehmen.
+
+## [1.7.0] - 2025-01-13
 - Hinzugefügt: Neue Spielmodus-Karte "Killer-Dart" (Derzeit ausgeblendet)
 - Hinzugefügt: Schwierigskeitsstufe "Doppel" für "Lucky-Number" in den Spieleinstellungen.
 - Hinzugefügt: Schwierigkeit "Doppel" wurde dem Spiel "Lucky-Number" hinzugefügt.

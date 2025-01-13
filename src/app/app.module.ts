@@ -8,7 +8,6 @@ import { DartPresetComponent } from './dart-preset/dart-preset.component';
 import { DartPresetInfoComponent } from './dart-preset-info/dart-preset-info.component';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { FormsModule } from '@angular/forms';
-import { DartGameSingleOutComponent } from './dart-game-single-out/dart-game-single-out.component';
 import { DartWinnerModalComponent } from './dart-winner-modal/dart-winner-modal.component';
 import { FooterComponent } from './footer/footer.component';
 import { DartGameAroundTheClockComponent } from './dart-game-around-the-clock/dart-game-around-the-clock.component';
@@ -21,6 +20,8 @@ import { ChooseSongModalComponent } from './shared/choose-song-modal/choose-song
 import { GameSettingsComponent } from './shared/game-settings/game-settings.component';
 import { DartGameLuckyNumbersComponent } from './dart-game-lucky-numbers/dart-game-lucky-numbers.component';
 import { DartCountButtonsComponent } from './dart-count-buttons/dart-count-buttons.component';
+import { SettingsTopBarComponent } from './shared/settings-top-bar/settings-top-bar.component';
+import { DartGameSingleOutComponent } from './dart-game-single-out/dart-game-single-out.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DartCountButtonsComponent } from './dart-count-buttons/dart-count-butto
     ModalConfirmActionComponent,
     GameSettingsComponent,
     DartGameLuckyNumbersComponent,
-    DartCountButtonsComponent
+    DartCountButtonsComponent,
+    SettingsTopBarComponent,
   ],
   imports: [
     BrowserModule,

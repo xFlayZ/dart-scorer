@@ -205,7 +205,6 @@ export class DartPresetComponent implements OnInit {
     localStorage.removeItem('gameData');
     localStorage.removeItem('gameStartedData');
     localStorage.removeItem('players');
-    localStorage.removeItem('speakToTextEnabled');
     window.location.reload();
   }
 
