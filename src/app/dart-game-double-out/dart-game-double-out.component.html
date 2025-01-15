@@ -164,11 +164,11 @@
   <div class="col-start-7 col-span-6 mt-1">
     <div class="score-input">
       <app-dart-board
-        *ngIf="savedSettings && !savedSettings['countButtonsEnabled']"
+        *ngIf="!countButtonEnabled"
         (thrownNumber)="onThrownNumberChange($event)"
       ></app-dart-board>
       <app-dart-count-buttons
-        *ngIf="savedSettings && savedSettings['countButtonsEnabled']"
+        *ngIf="countButtonEnabled"
         (thrownNumber)="onThrownNumberChange($event)"
       ></app-dart-count-buttons>
     </div>

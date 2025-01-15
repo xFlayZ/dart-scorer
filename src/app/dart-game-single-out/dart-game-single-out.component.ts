@@ -29,6 +29,7 @@ export class DartGameSingleOutComponent implements OnInit {
   public checkoutThirdDart = '';
 
   public savedSettings?: { [key: string]: boolean };
+  public countButtonEnabled = false;
 
   constructor(
     public gameService: GameService,
@@ -40,6 +41,10 @@ export class DartGameSingleOutComponent implements OnInit {
     this.setupGame();
     const savedSettings = localStorage.getItem('dartSettings');
     this.savedSettings = savedSettings ? JSON.parse(savedSettings) : undefined;
+
+    if (this.savedSettings) {
+      this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
+     }
   }
 
   setupGame() {
@@ -399,5 +404,8 @@ export class DartGameSingleOutComponent implements OnInit {
 
   handleSettingsChange(newSettings: { [key: string]: boolean }) {
     this.savedSettings = newSettings;
+    if (this.savedSettings) {
+      this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
+     }
   }
 }

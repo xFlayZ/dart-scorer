@@ -35,6 +35,7 @@ export class DartGameDoubleOutComponent implements OnInit {
    public checkoutThirdDart = '';
  
    public savedSettings?: { [key: string]: boolean };
+   public countButtonEnabled = false;
  
    constructor(
      public gameService: GameService,
@@ -46,6 +47,10 @@ export class DartGameDoubleOutComponent implements OnInit {
      this.setupGame();
      const savedSettings = localStorage.getItem('dartSettings');
      this.savedSettings = savedSettings ? JSON.parse(savedSettings) : undefined;
+
+     if (this.savedSettings) {
+      this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
+     }
    }
  
    setupGame() {
@@ -164,7 +169,12 @@ export class DartGameDoubleOutComponent implements OnInit {
          localStorage.setItem('gameData', JSON.stringify(this.gameData));
          this.winnerModalOpen = true;
          currentPlayer.wins += 1;
-       }
+       } else if (currentPlayer.score <= 1) {
+        this.deleteLastDart();
+        this.deleteLastDart();
+        this.deleteLastDart();
+        this.nextPlayer();
+      } 
      });
    }
  
@@ -418,5 +428,8 @@ export class DartGameDoubleOutComponent implements OnInit {
  
    handleSettingsChange(newSettings: { [key: string]: boolean }) {
      this.savedSettings = newSettings;
+     if (this.savedSettings) {
+      this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
+     }
    }
 }
