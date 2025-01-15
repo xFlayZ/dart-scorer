@@ -24,7 +24,9 @@ export class GameService {
       (acc, dart) => acc + this.getPointsFromDart(dart),
       0
     );
-    return gameData.roundHistory.length > 0 ? Math.ceil(totalScore / Math.ceil(gameData.roundHistory.length / 3)) : 0;
+    return gameData.roundHistory.length > 0
+      ? Math.ceil(totalScore / Math.ceil(gameData.roundHistory.length / 3))
+      : 0;
   }
 
   calculateLastThrownSum(gameData: GameData): number {
@@ -34,7 +36,28 @@ export class GameService {
     return firstDart + secondDart + thirdDart;
   }
 
-  generateWaitingPlayerList(gameData: GameData[], currentPlayer: number): GameData[] {
+  generateWaitingPlayerList(
+    gameData: GameData[],
+    currentPlayer: number
+  ): GameData[] {
+    // Erhalte den Index des aktuellen Spielers.
+    const currentPlayerIndex = currentPlayer;
+
+    // Teile die Spieler in die vor dem aktuellen Spieler und die nach dem aktuellen Spieler.
+    const playersBeforeCurrent = gameData.slice(0, currentPlayerIndex);
+    const playersAfterCurrent = gameData.slice(currentPlayerIndex + 1);
+
+    // Erstelle eine neue Liste, die mit den Spielern vor dem aktuellen Spieler beginnt,
+    // umgekehrt sortiert, und dann die Spieler nach dem aktuellen Spieler, ebenfalls umgekehrt sortiert.
+    return [
+      ...playersBeforeCurrent.reverse(),
+      ...playersAfterCurrent.reverse(),
+    ];
+  }
+
+  // alternative Logik
+
+  /*generateWaitingPlayerList(gameData: GameData[], currentPlayer: number): GameData[] {
     // Erhalte den Index des aktuellen Spielers, adjustiere für 0-basierten Index.
     const currentPlayerIndex = currentPlayer;
 
@@ -44,5 +67,5 @@ export class GameService {
 
     // Zusammenführen der beiden Listen.
     return [...playersAfterCurrent, ...playersBeforeCurrent];
-  }
+  }*/
 }

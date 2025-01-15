@@ -350,6 +350,9 @@ export class DartGameDoubleOutComponent implements OnInit {
            currentPlayer.roundHistory.splice(-1);
          }
          this.deleteLastDart();
+         if (this.gameData[this.currentPlayer - 1].firstDart === "-" && currentPlayer.firstDart === "-") {
+          this.undoLastActionEnabled = false;
+        }
        }
      }
      localStorage.setItem('gameData', JSON.stringify(this.gameData));

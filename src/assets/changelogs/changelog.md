@@ -1,7 +1,11 @@
 # Changelog
 
+## [1.7.2] - 2025-01-15
+- Anpassung: Kleine Änderung bei "Letzte Aktion löschen" - Single Out, Double Out
+- Anpassung: Wartende Spieler werden jetzt absteigend abgezeigt - Single Out, Double Out
+
 ## [1.7.1] - 2025-01-14
-- Rework: Die TypeScript der "Single-Out" Komponente wurde komplett überarbeitet. (WIP)
+- Rework: Die TypeScript der "Single-Out" Komponente wurde komplett überarbeitet.
     - Top-Bar-Settings: Die oberen Einstellungen sind nun in einer eigenen Komponente, um sie später leichter zu übernehmen.
 
 ## [1.7.0] - 2025-01-13

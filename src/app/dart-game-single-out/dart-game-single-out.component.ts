@@ -44,7 +44,7 @@ export class DartGameSingleOutComponent implements OnInit {
 
     if (this.savedSettings) {
       this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
-     }
+    }
   }
 
   setupGame() {
@@ -326,6 +326,9 @@ export class DartGameSingleOutComponent implements OnInit {
           currentPlayer.roundHistory.splice(-1);
         }
         this.deleteLastDart();
+        if (this.gameData[this.currentPlayer - 1].firstDart === "-" && currentPlayer.firstDart === "-") {
+          this.undoLastActionEnabled = false;
+        }
       }
     }
     localStorage.setItem('gameData', JSON.stringify(this.gameData));
@@ -378,8 +381,8 @@ export class DartGameSingleOutComponent implements OnInit {
 
   checkLastActivePlayer(player: any) {
     player.isActive = !player.isActive;
-    const activePlayersCount = this.gameData.filter(p => p.isActive).length;
-    this.lastActivePlayer = (activePlayersCount === 1);
+    const activePlayersCount = this.gameData.filter((p) => p.isActive).length;
+    this.lastActivePlayer = activePlayersCount === 1;
   }
 
   onResetGameChange(resetGame: boolean) {
@@ -406,6 +409,6 @@ export class DartGameSingleOutComponent implements OnInit {
     this.savedSettings = newSettings;
     if (this.savedSettings) {
       this.countButtonEnabled = this.savedSettings['countButtonsEnabled'];
-     }
+    }
   }
 }
