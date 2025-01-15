@@ -22,6 +22,7 @@ import { DartGameLuckyNumbersComponent } from './dart-game-lucky-numbers/dart-ga
 import { DartCountButtonsComponent } from './dart-count-buttons/dart-count-buttons.component';
 import { SettingsTopBarComponent } from './shared/settings-top-bar/settings-top-bar.component';
 import { DartGameSingleOutComponent } from './dart-game-single-out/dart-game-single-out.component';
+import { SimpleDartWinnerModalComponent } from './shared/simple-dart-winner-modal/simple-dart-winner-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DartGameSingleOutComponent } from './dart-game-single-out/dart-game-sin
     DartGameLuckyNumbersComponent,
     DartCountButtonsComponent,
     SettingsTopBarComponent,
+    SimpleDartWinnerModalComponent,
   ],
   imports: [
     BrowserModule,

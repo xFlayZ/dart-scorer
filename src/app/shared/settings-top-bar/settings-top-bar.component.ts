@@ -10,9 +10,12 @@ export class SettingsTopBarComponent {
 
   @Input() resetRoundButtonEnabled: boolean = false;
   @Input() resetGameButtonEnabled: boolean = false;
+  @Input() gameModeTitle: string = 'PeiDu Scorer';
 
   @Output() resetRound = new EventEmitter<boolean>();
   @Output() resetGame = new EventEmitter<boolean>();
+  @Output() countButtonsEnabled = new EventEmitter<boolean>();
+  @Output() settingsChanged = new EventEmitter<{ [key: string]: boolean }>();
 
   settingsOptions = [
     { label: 'Sprachansagen', key: 'speakToTextEnabled' },
@@ -34,6 +37,7 @@ export class SettingsTopBarComponent {
 
   updateSettings(): void {
     localStorage.setItem('dartSettings', JSON.stringify(this.settings));
+    this.settingsChanged.emit(this.settings);
   }
 
   loadSettings(): void {
@@ -52,4 +56,5 @@ export class SettingsTopBarComponent {
   onResetGame() {
     this.resetGame.emit(true);
   }
+
 }

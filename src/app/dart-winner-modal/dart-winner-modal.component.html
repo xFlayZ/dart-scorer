@@ -31,9 +31,9 @@
                     <th class="px-4 py-2">Spieler</th>
                     <th class="px-4 py-2">Gewonnene Legs</th>
                     <th class="px-4 py-2">Rest Score</th>
-                    <th class="px-4 py-2">Runde</th>
                     <th class="px-4 py-2">Runden Durchschnitt</th>
-                    <th class="px-4 py-2">Höchster Wurf</th>
+                    <th class="px-4 py-2">Höchster Rundenwurf</th>
+                    <th class="px-4 py-2">Höchster Spielwurf</th>
                   </tr>
                 </thead>
                 <tbody class="text-white">
@@ -41,12 +41,14 @@
                     <td class="px-4 py-2 text-center">{{ player.player }}</td>
                     <td class="px-4 py-2 text-center">{{ player.wins }}</td>
                     <td class="px-4 py-2 text-center">{{ player.score }}</td>
-                    <td class="px-4 py-2 text-center">{{ player.round }}</td>
                     <td class="px-4 py-2 text-center">
-                      {{ player.roundAverage }}
+                      {{ gameService.calculateRoundAverage(player) }}
                     </td>
                     <td class="px-4 py-2 text-center">
-                      {{ player.highestRound }}
+                      {{ player.roundHighscore }}
+                    </td>
+                    <td class="px-4 py-2 text-center">
+                      {{ player.gameHighscore }}
                     </td>
                   </tr>
                 </tbody>
@@ -54,8 +56,14 @@
             </div>
           </div>
           <div class="flex-grow text-center mt-5">
-            <button
-            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+          <button
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+            (click)="onUndoLastAction()"
+          >
+            <i class="fa-solid fa-rotate-left mr-2"></i>Letzte Aktion zurücksetzen
+          </button>
+          <button
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded ml-4"
             (click)="closeModal()"
           >
             <i class="fa-solid fa-play mr-2"></i>Neue Runde

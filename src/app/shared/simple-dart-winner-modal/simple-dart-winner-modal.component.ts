@@ -1,16 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GameService } from '../services/gameServices/game.service';
-import { GameData } from '../interfaces/game-data.interface';
+import { GameData } from '../../interfaces/game-data.interface';
+import { GameService } from '../../services/gameServices/game.service';
 
 @Component({
-  selector: 'app-dart-winner-modal',
-  templateUrl: './dart-winner-modal.component.html',
-  styleUrl: './dart-winner-modal.component.scss'
+  selector: 'app-simple-dart-winner-modal',
+  templateUrl: './simple-dart-winner-modal.component.html',
+  styleUrl: './simple-dart-winner-modal.component.scss'
 })
-export class DartWinnerModalComponent {
+export class SimpleDartWinnerModalComponent {
   @Input() isOpen: boolean = false; // Input property to control modal visibility
   @Input() winner: string = 'Spieler';
-  @Input() gameData: GameData[] = []; 
   @Output() undoLastActionEvent = new EventEmitter<void>(); 
   @Output() closeModalEvent = new EventEmitter<void>(); // Event emitter for closing the modal
 
@@ -22,10 +21,5 @@ export class DartWinnerModalComponent {
 
   onUndoLastAction() {
     this.undoLastActionEvent.emit(); // Emit event to close the modal
-  }
-
-
-  get sortedGameData() {
-    return this.gameData.slice().sort((a, b) => b.wins - a.wins);
   }
 }

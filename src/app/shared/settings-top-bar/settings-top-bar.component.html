@@ -10,8 +10,8 @@
     </a>
 
     <!-- GameMode Text -->
-    <div class="text-lg text-white font-semibold">
-      <ng-content select="[game-mode]"></ng-content>
+    <div class="text-2xl text-white font-semibold">
+      {{ gameModeTitle }}
     </div>
 
     <!-- Settings button -->
@@ -76,10 +76,11 @@
             <button
               class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2"
               (click)="onResetRound()"
+              [hidden]="true"
               [ngClass]="{
-                'opacity-50 cursor-not-allowed': resetRoundButtonEnabled
+                'opacity-50 cursor-not-allowed': !resetRoundButtonEnabled
               }"
-              [disabled]="resetRoundButtonEnabled"
+              [disabled]="!resetRoundButtonEnabled"
             >
               <i class="fas fa-sync-alt mr-2"></i>Runde Zurücksetzen
             </button>
@@ -90,10 +91,11 @@
             <button
               class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2"
               (click)="onResetGame()"
+              [hidden]="true"
               [ngClass]="{
-                'opacity-50 cursor-not-allowed': resetGameButtonEnabled
+                'opacity-50 cursor-not-allowed': !resetGameButtonEnabled
               }"
-              [disabled]="resetGameButtonEnabled"
+              [disabled]="!resetGameButtonEnabled"
             >
               <i class="fas fa-sync-alt mr-2"></i>Spiel Zurücksetzen
             </button>

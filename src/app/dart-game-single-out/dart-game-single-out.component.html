@@ -1,6 +1,185 @@
 <app-settings-top-bar
-[resetRoundButtonEnabled]="false"
-[resetGameButtonEnabled]="false"
-(resetGame)="onResetGameChange($event)"
-(resetRound)="onResetRoundChange($event)"
+  [resetRoundButtonEnabled]="false"
+  [resetGameButtonEnabled]="false"
+  gameModeTitle="Single Out"
+  (resetGame)="onResetGameChange($event)"
+  (resetRound)="onResetRoundChange($event)"
+  (settingsChanged)="handleSettingsChange($event)"
 ></app-settings-top-bar>
+
+<div class="grid grid-cols-12">
+  <div class="col-start-1 col-span-6">
+    <div class="player-card" style="max-height: 100vh; overflow-y: auto">
+      <!-- active player card -->
+      <div class="bg-teal-700 text-white shadow-lg p-2 mt-20 mr-1">
+        <div class="grid grid-cols-3">
+          <div class="font-semibold items-center justify-start pl-4">
+            Aktueller Spieler
+          </div>
+          <div class="font-semibold flex items-center justify-center">
+            Runden Durchschnitt:
+            {{ gameService.calculateRoundAverage(gameData[currentPlayer]) }}
+          </div>
+          <div class="font-semibold flex items-center justify-end pr-4">
+            Runde: {{ gameData[currentPlayer].round }}
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-800 text-white shadow-lg p-4 mr-1">
+        <div class="grid grid-cols-12">
+          <div
+            class="col-start-1 col-span-9 font-bold text-5xl text-center flex justify-start items-center"
+          >
+            <span>{{ gameData[currentPlayer].player }}</span>
+            <i
+              *ngIf="gameData[currentPlayer].isActive && !lastActivePlayer"
+              (click)="togglePlayerStatus(gameData[currentPlayer])"
+              class="fa-2xs fa-solid fa-check text-green-500 cursor-pointer ml-6"
+            ></i>
+            <i
+              *ngIf="!gameData[currentPlayer].isActive && !lastActivePlayer"
+              (click)="togglePlayerStatus(gameData[currentPlayer])"
+              class="fa-2xs fa-solid fa-ban text-red-500 cursor-pointer ml-6"
+            ></i>
+          </div>
+          <div
+            class="col-start-10 col-span-3 flex justify-end items-center text-5xl mr-5"
+          >
+            <i
+              *ngIf="undoLastActionEnabled"
+              (click)="undoLastAction()"
+              class="fa-2xs fa-solid fa-rotate-left text-red-500 cursor-pointer mr-6"
+            ></i>
+            {{ gameData[currentPlayer].score }}
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mt-8">
+          <div
+            class="h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          >
+            <span
+              *ngIf="
+                checkoutFirstDart != '' &&
+                gameData[currentPlayer].firstDart === '-'
+              "
+              class="text-green-500"
+              >{{ checkoutFirstDart }}</span
+            >
+            <span *ngIf="checkoutFirstDart === ''">{{
+              gameData[currentPlayer].firstDart
+            }}</span>
+          </div>
+          <div
+            class="h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          >
+            <span
+              *ngIf="
+                checkoutSecondDart != '' &&
+                gameData[currentPlayer].secondDart === '-'
+              "
+              class="text-green-500"
+              >{{ checkoutSecondDart }}</span
+            >
+            <span *ngIf="checkoutSecondDart === ''">{{
+              gameData[currentPlayer].secondDart
+            }}</span>
+          </div>
+          <div
+            class="h-16 flex items-center justify-center bg-white text-black font-extrabold text-4xl"
+          >
+            <span
+              *ngIf="
+                checkoutThirdDart != '' &&
+                gameData[currentPlayer].thirdDart === '-'
+              "
+              class="text-green-500"
+              >{{ checkoutThirdDart }}</span
+            >
+            <span *ngIf="checkoutThirdDart === ''">{{
+              gameData[currentPlayer].thirdDart
+            }}</span>
+          </div>
+          <div
+            class="h-16 flex items-center justify-center bg-gray-500 text-white font-semibold text-4xl"
+          >
+            {{ gameService.calculateLastThrownSum(gameData[currentPlayer]) }}
+          </div>
+        </div>
+      </div>
+      <!-- active player card end -->
+
+      <!-- waiting player card -->
+      <div
+        *ngFor="let playerData of waitingPlayerGameData"
+        class="bg-gray-700 text-gray-600 shadow-lg p-4 mr-1 mt-2"
+      >
+        <div class="grid grid-cols-12">
+          <div
+            class="col-start-1 col-span-9 text-5xl text-center flex justify-start items-center"
+          >
+            <span>{{ playerData.player }}</span>
+            <i
+              *ngIf="playerData.isActive"
+              (click)="togglePlayerStatus(playerData)"
+              class="fa-2xs fa-solid fa-check text-gray-500 cursor-pointer ml-6"
+            ></i>
+            <i
+              *ngIf="!playerData.isActive"
+              (click)="togglePlayerStatus(playerData)"
+              class="fa-2xs fa-solid fa-ban text-gray-500 cursor-pointer ml-6"
+            ></i>
+          </div>
+          <div
+            class="col-start-10 col-span-3 flex justify-end items-center text-5xl mr-5"
+          >
+            {{ playerData.score }}
+          </div>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mt-8">
+          <div
+            class="h-16 flex items-center justify-center text-gray-600 font-extrabold text-4xl"
+          >
+            {{ playerData.firstDart }}
+          </div>
+          <div
+            class="h-16 flex items-center justify-center text-gray-600 font-extrabold text-4xl"
+          >
+            {{ playerData.secondDart }}
+          </div>
+          <div
+            class="h-16 flex items-center justify-center text-gray-600 font-extrabold text-4xl"
+          >
+            {{ playerData.thirdDart }}
+          </div>
+          <div
+            class="h-16 flex items-center justify-center bg-gray-600 text-gray-500 font-semibold text-4xl"
+          >
+            {{ gameService.calculateLastThrownSum(playerData) }}
+          </div>
+        </div>
+      </div>
+      <!-- waiting player card end -->
+    </div>
+  </div>
+  <div class="col-start-7 col-span-6 mt-1">
+    <div class="score-input">
+      <app-dart-board
+        *ngIf="savedSettings && !savedSettings['countButtonsEnabled']"
+        (thrownNumber)="onThrownNumberChange($event)"
+      ></app-dart-board>
+      <app-dart-count-buttons
+        *ngIf="savedSettings && savedSettings['countButtonsEnabled']"
+        (thrownNumber)="onThrownNumberChange($event)"
+      ></app-dart-count-buttons>
+    </div>
+  </div>
+</div>
+
+<!-- Winner Modal -->
+<app-dart-winner-modal
+  [isOpen]="winnerModalOpen"
+  [winner]="gameData[currentPlayer].player"
+  [gameData]="gameData"
+  (closeModalEvent)="closeWinnerModal()"
+  (undoLastActionEvent)="winnerModalUndoLastAction()"
+></app-dart-winner-modal>

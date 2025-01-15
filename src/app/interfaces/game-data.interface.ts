@@ -1,18 +1,17 @@
 export interface GameData {
     player: string;
-    score: number;
-    lastScore: number;
+    isActive: boolean;
+    winnerSong: string;
+    gameHighscore: number;
+    gameAverage: number;
     wins: number;
-    roundAverage: number;
-    totalAverage: number;
-    highestRound: number;
+    round: number;
+    score: number;
     firstDart: string;
     secondDart: string;
     thirdDart: string;
-    roundTotal: number;
-    round: number;
     game: number;
-    isActive: boolean;
-    winnerSong: string;
+    roundHighscore: number;
+    roundHistory: string[];
     [key: string]: any;
 }
