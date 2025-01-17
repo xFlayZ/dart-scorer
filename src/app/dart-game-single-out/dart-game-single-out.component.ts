@@ -284,6 +284,18 @@ export class DartGameSingleOutComponent implements OnInit {
           if (this.gameData[lastPossiblePlayer].round === 0) {
             this.undoLastActionEnabled = false;
           }
+        } else if (
+          !this.gameData[this.currentPlayer - 1].isActive &&
+          currentPlayer.round === 1
+        ) {
+          this.undoLastActionEnabled = false;
+        } else if (
+          !this.gameData[this.currentPlayer - 1].isActive &&
+          currentPlayer.round > 1 &&
+          this.lastActivePlayer &&
+          currentPlayer.firstDart === '-'
+        ) {
+          this.undoLastActionEnabled = false;
         }
       }
     } else if (currentPlayer.firstDart === '-') {
@@ -315,9 +327,11 @@ export class DartGameSingleOutComponent implements OnInit {
           this.deleteLastDart();
         }
       } else {
-        this.currentPlayer = this.currentPlayer - 1;
-        currentPlayer = this.gameData[this.currentPlayer];
-        this.generateWaitingPlayerList();
+        if (this.gameData[this.currentPlayer - 1].isActive) {
+          this.currentPlayer = this.currentPlayer - 1;
+          currentPlayer = this.gameData[this.currentPlayer];
+          this.generateWaitingPlayerList();
+        }
         if (currentPlayer.thirdDart != '-') {
           currentPlayer.roundHistory.splice(-3);
         } else if (currentPlayer.secondDart != '-') {
@@ -326,7 +340,10 @@ export class DartGameSingleOutComponent implements OnInit {
           currentPlayer.roundHistory.splice(-1);
         }
         this.deleteLastDart();
-        if (this.gameData[this.currentPlayer - 1].firstDart === "-" && currentPlayer.firstDart === "-") {
+        if (
+          this.gameData[this.currentPlayer - 1].firstDart === '-' &&
+          currentPlayer.firstDart === '-'
+        ) {
           this.undoLastActionEnabled = false;
         }
       }
@@ -383,6 +400,10 @@ export class DartGameSingleOutComponent implements OnInit {
     player.isActive = !player.isActive;
     const activePlayersCount = this.gameData.filter((p) => p.isActive).length;
     this.lastActivePlayer = activePlayersCount === 1;
+
+    if (this.lastActivePlayer && player.firstDart === '-') {
+      this.undoLastActionEnabled = false;
+    }
   }
 
   onResetGameChange(resetGame: boolean) {
